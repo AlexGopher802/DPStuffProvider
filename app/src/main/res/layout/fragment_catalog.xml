@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.CatalogFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_baseline_search_24"
+                app:endIconMode="clear_text"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:hint="Я хочу купить...">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:maxLength="100"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <Button
+            android:id="@+id/btnUndo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/cardSearch"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/undo"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/categoryImg"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_below="@id/cardSearch"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/img_placeholder"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/titleCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categoryImg"
+            android:text="Категория"
+            android:textSize="25sp"
+            android:textColor="@color/mainDark"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/linkToCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleCategory"
+            android:text="Смотреть все товары..."
+            android:textSize="18sp"
+            android:textColor="@color/link"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/linkToCategory"
+            android:layout_alignParentBottom="true"
+            tools:listitem="@layout/item_category" />
+
+    </RelativeLayout>
+
+</FrameLayout>
