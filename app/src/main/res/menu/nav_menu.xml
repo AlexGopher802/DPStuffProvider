@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/allDelivery"
+        android:icon="@drawable/ic_baseline_assignment_24"
+        android:title="Доступные заказы" />
+
+    <item
+        android:id="@+id/activeDelivery"
+        android:icon="@drawable/ic_baseline_assignment_late_24"
+        android:title="Активные заказы" />
+
+    <item
+        android:id="@+id/account"
+        android:icon="@drawable/ic_baseline_assignment_ind_24"
+        android:title="Личный кабинет" />
+</menu>
