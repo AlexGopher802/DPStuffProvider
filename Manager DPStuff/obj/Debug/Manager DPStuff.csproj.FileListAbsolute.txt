@@ -1,0 +1,10 @@
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\bin\Debug\Manager DPStuff.exe.config
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\bin\Debug\Manager DPStuff.exe
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\bin\Debug\Manager DPStuff.pdb
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager DPStuff.csprojAssemblyReference.cache
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager_DPStuff.Form1.resources
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager_DPStuff.Properties.Resources.resources
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager DPStuff.csproj.GenerateResource.cache
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager DPStuff.csproj.CoreCompileInputs.cache
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager DPStuff.exe
+D:\Work\DP Stuff Provider\Manager DPStuff\Manager DPStuff\obj\Debug\Manager DPStuff.pdb
