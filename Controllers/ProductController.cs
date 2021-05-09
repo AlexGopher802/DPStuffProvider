@@ -1,0 +1,117 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DPSP_Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductController : ControllerBase
+    {
+        private readonly DPSPDBContext _context;
+
+        public ProductController(DPSPDBContext context)
+        {
+            _context = context;
+        }
+
+        /// <summary>
+        /// Получаем список всех товаров
+        /// </summary>
+        [HttpGet]
+        public IEnumerable<object> GetProducts()
+        {
+            var result = from product in _context.Products
+                         join store in _context.StoreInfos on product.IdStoreInfo equals store.Id
+                         join category in _context.ProductCategories on product.IdCategory equals category.Id
+                         select new
+                         {
+                             id = product.Id,
+                             name = product.Name,
+                             price = product.Cost,
+                             rating = product.Rating,
+                             avail = product.Avail,
+                             category = category.Name,
+                             store = store.Name
+                         };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Получаем и выводим список товаров категории и всех дочерних категорий
+        /// </summary>
+        [HttpGet]
+        [Route("{categoryName}")]
+        public ActionResult<IEnumerable<object>> GetProducts(string categoryName)
+        {
+            var result = ProductsByCategory(categoryName);
+
+            if(result.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
+        }
+
+        /// <summary>
+        /// Получаем список товаров категории и всех дочерних категорий
+        /// </summary>
+        public List<object> ProductsByCategory(string categoryName)
+        {
+            var result = (from product in _context.Products
+                          join store in _context.StoreInfos on product.IdStoreInfo equals store.Id
+                          join category in _context.ProductCategories on product.IdCategory equals category.Id
+                          where category.Name == categoryName
+                          select new
+                          {
+                              id = product.Id,
+                              name = product.Name,
+                              price = product.Cost,
+                              rating = product.Rating,
+                              avail = product.Avail,
+                              category = category.Name,
+                              store = store.Name
+                          }).ToList<object>();
+
+            var listChilds = new CategoryController(_context).ChildCategories(categoryName);
+            if (listChilds.Count != 0)
+            {
+                foreach(var i in listChilds)
+                {
+                    result.AddRange(ProductsByCategory(i.Name));
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Получаем подробную информацию о товаре (характеристики)
+        /// </summary>
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult<IEnumerable<object>> GetMoreInfo(int id)
+        {
+            var result = from productDesc in _context.ProductDescriptions
+                         join attribute in _context.ProductAttributes on productDesc.IdProductAttribute equals attribute.Id
+                         where productDesc.IdProduct == id
+                         select new
+                         {
+                             attribute = attribute.Name,
+                             value = productDesc.AttrValue
+                         };
+
+            if (result.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
+        }
+    }
+}
