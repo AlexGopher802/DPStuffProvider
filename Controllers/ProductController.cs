@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DPSP_Api.Models.Views;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,19 +25,19 @@ namespace DPSP_Api.Controllers
         [HttpGet]
         public IEnumerable<object> GetProducts()
         {
-            var result = from product in _context.Products
-                         join store in _context.StoreInfos on product.IdStoreInfo equals store.Id
-                         join category in _context.ProductCategories on product.IdCategory equals category.Id
-                         select new
-                         {
-                             id = product.Id,
-                             name = product.Name,
-                             price = product.Cost,
-                             rating = product.Rating,
-                             avail = product.Avail,
-                             category = category.Name,
-                             store = store.Name
-                         };
+            var result = (from product in _context.Products
+                          join store in _context.StoreInfos on product.IdStoreInfo equals store.Id
+                          join category in _context.ProductCategories on product.IdCategory equals category.Id
+                          select new ProductView()
+                          {
+                              id = product.Id,
+                              name = product.Name,
+                              price = product.Cost,
+                              rating = product.Rating,
+                              avail = product.Avail,
+                              category = category.Name,
+                              store = store.Name
+                          }).ToList();
 
             return result;
         }
@@ -84,6 +85,39 @@ namespace DPSP_Api.Controllers
                 foreach(var i in listChilds)
                 {
                     result.AddRange(ProductsByCategory(i.Name));
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Получаем список товаров по наименованию продукта
+        /// </summary>
+        [HttpGet]
+        [Route("[action]/{productName}")]
+        public List<ProductView> GetByName(string productName)
+        {
+            List<ProductView> result = new List<ProductView>();
+            var productsList = (from product in _context.Products
+                         join store in _context.StoreInfos on product.IdStoreInfo equals store.Id
+                         join category in _context.ProductCategories on product.IdCategory equals category.Id
+                         select new ProductView()
+                         {
+                             id = product.Id,
+                             name = product.Name,
+                             price = product.Cost,
+                             rating = product.Rating,
+                             avail = product.Avail,
+                             category = category.Name,
+                             store = store.Name
+                         }).ToList();
+
+            foreach(var i in productsList)
+            {
+                if (i.name.ToLower().Contains(productName.ToLower().Trim()))
+                {
+                    result.Add(i);
                 }
             }
 
