@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import com.example.dpstuffproviderstore.`interface`.ICategory
 import com.example.dpstuffproviderstore.adapter.CategoryAdapter
@@ -49,7 +51,7 @@ class CatalogFragment() : Fragment() {
                                         response: Response<List<CategoryData>>
                 ) {
                     if(response.code() == 200){
-                        inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, this@CatalogFragment)
+                        inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, this@CatalogFragment, null)
                     }
                     else{
                         Toast.makeText(context!!, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
@@ -61,6 +63,19 @@ class CatalogFragment() : Fragment() {
                 }
             })
 
+        }
+
+        inflate!!.inputTextSearch.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                Log.i("myLog", "Пошёл поиск...")
+                val mainActivity = activity as MainActivity
+                mainActivity.modeSearch = MainActivity.EnumModeSearch.NAME
+                mainActivity.productName = inflate!!.inputTextSearch.text.toString()
+                mainActivity.makeCurrentFragment(ProductsFragment())
+                true
+            } else {
+                false
+            }
         }
 
         return inflate

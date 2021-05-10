@@ -6,21 +6,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.CartFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvCartTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cart"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:textSize="20sp"/>
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textColor="@color/mainDark"
+            android:text="Ваша корзина пока пуста..."/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnGoToCatalog"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:background="@color/mainButton"
+            android:textColor="@color/mainDark"
+            android:layout_below="@id/tvCartTitle"
+            android:layout_centerHorizontal="true"
+            android:textSize="12sp"
+            android:layout_marginTop="25dp"
+            android:text="Каталог"/>
+
+    </RelativeLayout>
 
 </FrameLayout>

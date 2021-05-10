@@ -13,7 +13,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    enum class EnumModeSearch{ CATEGORY, NAME }
+
     //val listCategory : List<CategoryData> = listOf(CategoryData(1, "1cat", ""), CategoryData(2, "2cat", ""), CategoryData(3, "3cat", ""))
+    var productCategory : String = ""
+    var productName : String = ""
+    var modeSearch = EnumModeSearch.CATEGORY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

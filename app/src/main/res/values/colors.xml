@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="mainDark">#19191A</color>
     <color name="link">#0032A6</color>
+    <color name="mainButton">#FFD426</color>
 </resources>

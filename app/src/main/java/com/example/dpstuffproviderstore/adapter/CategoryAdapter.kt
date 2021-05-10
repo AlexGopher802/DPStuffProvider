@@ -38,7 +38,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
-internal class CategoryAdapter(private var categoryList: List<CategoryData>, private var fragment: CatalogFragment) : RecyclerView.Adapter<CategoryAdapter.MyViewHolder>(){
+//Когда-нибудь я обязательно исправлю этот пиздец
+internal class CategoryAdapter(private var categoryList: List<CategoryData>, private var fragment: CatalogFragment, private var parentCategoryList: List<CategoryData>?) : RecyclerView.Adapter<CategoryAdapter.MyViewHolder>(){
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val title : TextView = view.findViewById(R.id.tvTitleCategory)
         val cardCategory : CardView = view.findViewById(R.id.cardCategory)
@@ -57,8 +58,6 @@ internal class CategoryAdapter(private var categoryList: List<CategoryData>, pri
 
         holder.cardCategory.setOnClickListener {
 
-            Toast.makeText(holder.itemView.context, "${categoryList[position].name}", Toast.LENGTH_LONG).show()
-
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -70,7 +69,7 @@ internal class CategoryAdapter(private var categoryList: List<CategoryData>, pri
                                         response: Response<List<CategoryData>>
                 ) {
                     if(response.code() == 200){
-                        fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, fragment)
+                        fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, fragment, categoryList)
                         fragment.inflate!!.titleCategory.visibility = View.VISIBLE
                         fragment.inflate!!.titleCategory.text = response.body()!![0].parentName
                         fragment.inflate!!.linkToCategory.visibility = View.VISIBLE
@@ -84,16 +83,45 @@ internal class CategoryAdapter(private var categoryList: List<CategoryData>, pri
                                     .into(fragment.inflate!!.categoryImg)
                         }
                         else{
-                            fragment.inflate!!.categoryImg.setImageResource(R.drawable.img_placeholder)
+                            fragment.inflate!!.categoryImg.visibility = View.GONE
                         }
 
                         fragment.inflate!!.btnUndo.visibility = View.VISIBLE
+
+
                         fragment.inflate!!.btnUndo.setOnClickListener {
-                            fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(categoryList, fragment)
+                            api.GetMainCategories().enqueue(object : Callback<List<CategoryData>> {
+                                override fun onResponse(call: Call<List<CategoryData>>,
+                                                        response: Response<List<CategoryData>>
+                                ) {
+                                    if(response.code() == 200){
+                                        fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, fragment, null)
+
+                                        fragment.inflate!!.titleCategory.visibility = View.GONE
+                                        fragment.inflate!!.linkToCategory.visibility = View.GONE
+                                        fragment.inflate!!.categoryImg.visibility = View.GONE
+                                        fragment.inflate!!.btnUndo.visibility = View.GONE
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
+                                    Toast.makeText(holder.itemView.context, t.message, Toast.LENGTH_LONG).show()
+                                }
+                            })
+
+                        }
+
+                        fragment.inflate!!.linkToCategory.setOnClickListener {
+                            val mainActivity = fragment.activity as MainActivity
+                            mainActivity.modeSearch = MainActivity.EnumModeSearch.CATEGORY
+                            mainActivity.productCategory = fragment.inflate!!.titleCategory.text.toString()
+                            mainActivity.makeCurrentFragment(ProductsFragment())
                         }
                     }
                     else{
                         val mainActivity = fragment.activity as MainActivity
+                        mainActivity.modeSearch = MainActivity.EnumModeSearch.CATEGORY
+                        mainActivity.productCategory = categoryList[position].name
                         mainActivity.makeCurrentFragment(ProductsFragment())
                     }
                 }

@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_cart.view.*
 
 class CartFragment : Fragment() {
 
@@ -13,8 +16,15 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_cart, container, false)
+
+        val mainActivity = activity as MainActivity
+
+        inflate.btnGoToCatalog.setOnClickListener {
+            mainActivity.bottomNavMenu.selectedItemId = R.id.catalog
+        }
+
+        return inflate
     }
 
 }

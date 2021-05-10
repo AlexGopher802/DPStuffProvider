@@ -28,6 +28,7 @@
                 android:hint="Я хочу купить...">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTextSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
@@ -62,14 +63,15 @@
 
         <TextView
             android:id="@+id/titleCategory"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/categoryImg"
-            android:text="Категория"
+            android:text="Категория товара"
             android:textSize="25sp"
             android:textColor="@color/mainDark"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="3dp"
             android:visibility="gone"/>
 
