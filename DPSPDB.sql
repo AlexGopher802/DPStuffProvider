@@ -215,7 +215,12 @@ insert into ProductCategory(name, idParentCategory) values
 (N'ћебель', null),
 (N'«оотовары', null)
 
-update ProductCategory set imageUrl = N'http://clipart-library.com/img/1604549.png' where name = N'Ёлектроника'
+update ProductCategory set imageUrl = N'https://avatars.mds.yandex.net/get-pdb/2852074/ac8b053e-59d4-40cb-8c23-6ce9b8cd5bc4/s1200' where name = N'Ёлектроника'
+update ProductCategory set imageUrl = N'https://avatars.mds.yandex.net/get-pdb/4516377/799f20f8-23ac-4c79-ba98-605ef500a007/s1200' where name = N' омпьютерна€ техника'
+update ProductCategory set imageUrl = N'https://avatars.mds.yandex.net/get-pdb/4571085/553bef76-e3f8-45d0-934a-57cc401502d0/s1200' where name = N'Ѕытова€ техника'
+update ProductCategory set imageUrl = N'https://avatars.mds.yandex.net/get-pdb/2434617/150b9b90-f1c3-4a07-8d86-4f5e91969560/s1200' where name = N' ниги'
+update ProductCategory set imageUrl = N'https://avatars.mds.yandex.net/get-pdb/4265498/f6fb9e7d-b7b8-4ad4-9a06-6b4decbe9125/s1200' where name = N'ћебель'
+update ProductCategory set imageUrl = N'https://avatars.mds.yandex.net/get-pdb/4263207/0c82c267-27d8-4325-8b96-ed3d85ed8d6c/s1200' where name = N'«оотовары'
 
 insert into ProductCategory(name, idParentCategory) values
 (N'—мартфоны и аксессуары', (select id from ProductCategory where name=N'Ёлектроника')),
