@@ -11,7 +11,19 @@ import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dpstuffproviderstore.R
+import com.example.dpstuffproviderstore.`interface`.ICategory
+import com.example.dpstuffproviderstore.`interface`.IProduct
+import com.example.dpstuffproviderstore.fragment.ProductsFragment
+import com.example.dpstuffproviderstore.models.CategoryData
 import com.example.dpstuffproviderstore.models.ProductData
+import com.example.dpstuffproviderstore.models.ProductImagesData
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_catalog.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 internal class ProductAdapter(private var productsList: List<ProductData>) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -39,6 +51,33 @@ internal class ProductAdapter(private var productsList: List<ProductData>) : Rec
         holder.btnCart.setOnClickListener {
             Toast.makeText(holder.itemView.context, "${productsList[position].name} Добавлен в корзину", Toast.LENGTH_LONG).show()
         }
+
+        val retrofit = Retrofit.Builder()
+                .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        val api = retrofit.create(IProduct::class.java)
+
+        api.GetImages(productsList[position].id).enqueue(object : Callback<List<ProductImagesData>> {
+            override fun onResponse(call: Call<List<ProductImagesData>>,
+                                    response: Response<List<ProductImagesData>>
+            ) {
+                if(response.code() == 200){
+                    Picasso.with(holder.itemView.context)
+                            .load(response.body()!![0].imageUrl)
+                            .placeholder(R.drawable.img_placeholder)
+                            .error(R.drawable.img_placeholder)
+                            .into(holder.productImage)
+                }
+                else{
+                    Toast.makeText(holder.itemView.context, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<ProductImagesData>>, t: Throwable){
+                Toast.makeText(holder.itemView.context, t.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     override fun getItemCount(): Int {

@@ -1,6 +1,7 @@
 package com.example.dpstuffproviderstore.`interface`
 
 import com.example.dpstuffproviderstore.models.ProductData
+import com.example.dpstuffproviderstore.models.ProductImagesData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,4 +15,7 @@ interface IProduct {
 
     @GET("product/GetByName/{productName}/")
     fun GetProductsByName(@Path("productName") productName: String): Call<List<ProductData>>
+
+    @GET("product/GetImages/{id}/")
+    fun GetImages(@Path("id") productId: Int): Call<List<ProductImagesData>>
 }

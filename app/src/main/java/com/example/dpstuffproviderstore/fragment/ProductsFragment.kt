@@ -25,6 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ProductsFragment : Fragment() {
 
+    var inflate : View? = null
+
     val retrofit = Retrofit.Builder()
             .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
             .addConverterFactory(GsonConverterFactory.create())
