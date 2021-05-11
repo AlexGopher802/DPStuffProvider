@@ -117,7 +117,7 @@ create table Product(
 
 create table ProductImages(
 	id int primary key identity,
-	imageUrl nvarchar(300) not null,
+	imageUrl nvarchar(max) not null,
 	idProduct int not null,
 	foreign key (idProduct) references Product (id)
 );
@@ -283,6 +283,39 @@ insert into ProductCompos(idOrder, idProduct, quantity, summ) values
 (3, (select id from Product where name=N'Геймпад Dualshock4' and idStoreInfo=1), 1, (select cost from Product where name=N'Геймпад Dualshock4' and idStoreInfo=1)*1),
 (3, (select id from Product where name=N'Геймпад Dualshock5' and idStoreInfo=4), 1, (select cost from Product where name=N'Геймпад Dualshock5' and idStoreInfo=4)*2)
 
+insert into ProductImages(idProduct, imageUrl) values
+((select id from Product where name=N'Геймпад Dualshock4' and idStoreInfo=1), N'https://www.ucustom.nl/wp-content/uploads/2019/01/PS4-Controller-Skin-Zwart-1.png'),
+((select id from Product where name=N'Геймпад Dualshock4' and idStoreInfo=2), N'https://images.wbstatic.net/big/new/20820000/20822789-1.jpg'),
+((select id from Product where name=N'Геймпад Dualshock4' and idStoreInfo=3), N'https://images-eu.ssl-images-amazon.com/images/I/41GPLTxGE6L.01_SL120_.jpg'),
+((select id from Product where name=N'Геймпад Dualshock4' and idStoreInfo=4), N'https://www.ucustom.nl/wp-content/uploads/2019/01/PS4-Controller-Skin-Zwart-1.png'),
+((select id from Product where name=N'Геймпад Dualshock4' and idStoreInfo=5), N'https://images-eu.ssl-images-amazon.com/images/I/41GPLTxGE6L.01_SL120_.jpg')
+insert into ProductImages(idProduct, imageUrl) values
+((select id from Product where name=N'Мышка Bloody Z36P2' and idStoreInfo=1), N'https://e7.pngegg.com/pngimages/465/617/png-clipart-computer-mouse-a4tech-bloody-gaming-a4-tech-bloody-v7m-a4tech-bloody-v7-computer-mouse-electronics-computer-keyboard.png'),
+((select id from Product where name=N'Мышка Bloody Z36P2' and idStoreInfo=2), N'https://e7.pngegg.com/pngimages/465/617/png-clipart-computer-mouse-a4tech-bloody-gaming-a4-tech-bloody-v7m-a4tech-bloody-v7-computer-mouse-electronics-computer-keyboard.png'),
+((select id from Product where name=N'Мышка Bloody Z36P2' and idStoreInfo=3), N'https://e7.pngegg.com/pngimages/465/617/png-clipart-computer-mouse-a4tech-bloody-gaming-a4-tech-bloody-v7m-a4tech-bloody-v7-computer-mouse-electronics-computer-keyboard.png'),
+((select id from Product where name=N'Мышка Bloody Z36P2' and idStoreInfo=4), N'https://e7.pngegg.com/pngimages/465/617/png-clipart-computer-mouse-a4tech-bloody-gaming-a4-tech-bloody-v7m-a4tech-bloody-v7-computer-mouse-electronics-computer-keyboard.png'),
+((select id from Product where name=N'Мышка Bloody Z36P2' and idStoreInfo=5), N'https://e7.pngegg.com/pngimages/465/617/png-clipart-computer-mouse-a4tech-bloody-gaming-a4-tech-bloody-v7m-a4tech-bloody-v7-computer-mouse-electronics-computer-keyboard.png')
+insert into ProductImages(idProduct, imageUrl) values
+((select id from Product where name=N'Наушники Jbl M25' and idStoreInfo=1), N'https://static.onlinetrade.ru/img/items/b/besprovodnie_naushniki_jbl_e45bt_krasniy_2.jpg'),
+((select id from Product where name=N'Наушники Jbl M25' and idStoreInfo=2), N'https://24.lv/images/detailed/484/JBL_LIVE500BT_Product_Image_Fold_White_17273_x1.png'),
+((select id from Product where name=N'Наушники Jbl M25' and idStoreInfo=3), N'https://img.mvideo.ru/Pdb/50125455b2.jpg'),
+((select id from Product where name=N'Наушники Jbl M25' and idStoreInfo=4), N'https://static.onlinetrade.ru/img/items/b/besprovodnie_naushniki_jbl_e45bt_krasniy_2.jpg'),
+((select id from Product where name=N'Наушники Jbl M25' and idStoreInfo=5), N'https://img.mvideo.ru/Pdb/50125455b2.jpg')
+insert into ProductImages(idProduct, imageUrl) values
+((select id from Product where name=N'Монитор Philips M20J3' and idStoreInfo=1), N'https://www.1sm.ru/upload/iblock/274/00000112446.JPG'),
+((select id from Product where name=N'Монитор Philips M20J3' and idStoreInfo=2), N'https://www.1sm.ru/upload/iblock/274/00000112446.JPG'),
+((select id from Product where name=N'Монитор Philips M20J3' and idStoreInfo=3), N'https://www.1sm.ru/upload/iblock/274/00000112446.JPG'),
+((select id from Product where name=N'Монитор Philips M20J3' and idStoreInfo=4), N'https://www.1sm.ru/upload/iblock/274/00000112446.JPG'),
+((select id from Product where name=N'Монитор Philips M20J3' and idStoreInfo=5), N'https://www.1sm.ru/upload/iblock/274/00000112446.JPG')
+insert into ProductImages(idProduct, imageUrl) values
+((select id from Product where name=N'Геймпад Dualshock5' and idStoreInfo=1), N'https://static-sl.insales.ru/images/products/1/1394/416662898/1.png'),
+((select id from Product where name=N'Геймпад Dualshock5' and idStoreInfo=2), N'https://static-sl.insales.ru/images/products/1/1394/416662898/1.png'),
+((select id from Product where name=N'Геймпад Dualshock5' and idStoreInfo=3), N'https://static-sl.insales.ru/images/products/1/1394/416662898/1.png'),
+((select id from Product where name=N'Геймпад Dualshock5' and idStoreInfo=4), N'https://static-sl.insales.ru/images/products/1/1394/416662898/1.png'),
+((select id from Product where name=N'Геймпад Dualshock5' and idStoreInfo=5), N'https://static-sl.insales.ru/images/products/1/1394/416662898/1.png')
+
+select * from ProductImages
+select * from Product where name=N'Геймпад Dualshock4'
 select * from Courier
 select * from Ordered
 select
