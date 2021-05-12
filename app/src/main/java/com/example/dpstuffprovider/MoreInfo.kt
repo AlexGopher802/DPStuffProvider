@@ -2,6 +2,7 @@ package com.example.dpstuffprovider
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dpstuffprovider.models.ClientData
 import com.example.dpstuffprovider.models.OrderCompos
@@ -26,6 +27,13 @@ class MoreInfo : AppCompatActivity() {
             tvClientName.text = "${clientInfo!!.firstName} ${clientInfo.patronymic}"
             tvClientPhone.text = "Телефон: ${clientInfo.phone}"
 
+            btnCheckMap.setOnClickListener {
+                Toast.makeText(applicationContext, "Скоро станет доступным...", Toast.LENGTH_LONG).show()
+            }
+
+            btnConfirmOrder.setOnClickListener {
+                Toast.makeText(applicationContext, "Скоро станет доступным...", Toast.LENGTH_LONG).show()
+            }
         }
         catch (e: Exception){
             tvAddress.text = e.message.toString()

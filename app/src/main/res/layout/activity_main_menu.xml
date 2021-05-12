@@ -10,17 +10,26 @@
         android:id="@+id/frameWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavMenu"/>
+        android:layout_above="@id/cardBottomMenu"
+        android:layout_alignParentTop="true"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavMenu"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardBottomMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/mainDark"
-        app:itemIconTint="#fff"
-        app:itemTextColor="#fff"
-        app:menu="@menu/nav_menu"/>
+        android:layout_marginTop="5dp">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            app:itemBackground="@color/mainDark"
+            app:itemIconTint="#fff"
+            app:itemTextColor="#fff"
+            app:menu="@menu/nav_menu"/>
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

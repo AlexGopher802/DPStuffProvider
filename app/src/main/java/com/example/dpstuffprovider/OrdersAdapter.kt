@@ -41,8 +41,8 @@ internal class OrdersAdapter (private var ordersList: List<OrdersData>) : Recycl
         Log.e("", "onBindViewHolder started")
         holder.address.text = ordersList[position].address
         holder.date.text = ordersList[position].deliveryDate
-        holder.timeFrom.text = ordersList[position].timeFrom
-        holder.timeTo.text = ordersList[position].timeTo
+        holder.timeFrom.text = "С ${ordersList[position].timeFrom}"
+        holder.timeTo.text = "До ${ordersList[position].timeTo}"
 
 
         holder.moreInfo.setOnClickListener{

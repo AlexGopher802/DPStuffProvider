@@ -19,39 +19,40 @@
 
     <EditText
         android:id="@+id/etLogin"
-        android:layout_width="250dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:hint="Введите логин"
-        android:text="log2"
+        android:text=""
         android:textColor="#19191A"
         android:outlineSpotShadowColor="#19191A"
         app:layout_constraintTop_toBottomOf="@id/Logo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="250dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="Введите пароль"
-        android:text="pass2"
+        android:text=""
         android:textColor="#19191A"
         android:outlineSpotShadowColor="#19191A"
         app:layout_constraintTop_toBottomOf="@id/etLogin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="45dp"
         android:layout_marginTop="60dp"
         android:text="Вход"
-        android:textColor="#19191A"
+        android:textColor="@color/mainDark"
+        android:background="@color/mainButton"
         app:layout_constraintTop_toBottomOf="@id/etPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

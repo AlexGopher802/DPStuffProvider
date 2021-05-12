@@ -24,11 +24,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         val sp : SharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE)
         if(sp.getBoolean("isLogin", false)){
             login(sp.getString("login", "")!!, sp.getString("password", "")!!)
+        }
+        else{
+            setContentView(R.layout.activity_main)
         }
     }
 
