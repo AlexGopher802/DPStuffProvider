@@ -147,5 +147,30 @@ namespace DPSP_Api.Controllers
 
             return new ObjectResult(result);
         }
+
+        /// <summary>
+        /// Получаем список адресов изображений товара
+        /// </summary>
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult<IEnumerable<object>> GetImages(int id)
+        {
+            var result = from productImage in _context.ProductImages
+                         //join product in _context.Products on productImage.IdProduct equals product.Id
+                         where productImage.IdProduct == id
+                         select new
+                         {
+                             id = productImage.Id,
+                             idProduct = productImage.IdProduct,
+                             imageUrl = productImage.ImageUrl
+                         };
+
+            if (result.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
+        }
     }
 }
