@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ErrorFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgError"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/errorimg"/>
+
+        <TextView
+            android:id="@+id/tvStatusCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/imgError"
+            android:textAlignment="center"
+            android:textColor="@color/mainDark"
+            android:textSize="40sp"
+            android:text="404"/>
+
+        <TextView
+            android:id="@+id/tvMessageError"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvStatusCode"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/mainDark"
+            android:textSize="22sp"
+            android:layout_centerHorizontal="true"
+            android:text="Нет соединения с интернетом, или сервис сейчас не доступен. Попробуйте еще раз чуть позже..."/>
+
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,25 +1,33 @@
 package com.example.dpstuffproviderstore.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import kotlinx.android.synthetic.main.fragment_account.view.*
 
 class AccountFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        var inflate = inflater.inflate(R.layout.fragment_account, container, false)
+    var testText: String? = null
 
-        inflate.btnLogin.setOnClickListener {
-            Toast.makeText(context!!, "Обещаю, это скоро станет доступным...", Toast.LENGTH_LONG).show()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val mainActivity = activity as MainActivity
+        val inflate = inflater.inflate(R.layout.fragment_account, container, false)
+
+        inflate.tvTestName.text = "${mainActivity.client!!.lastName} ${mainActivity.client!!.firstName} ${mainActivity.client!!.patronymic}"
+
+        inflate.btnOut.setOnClickListener {
+            val editor = mainActivity.getSharedPreferences("sp", Context.MODE_PRIVATE).edit()
+            editor.putBoolean("isLogin", false)
+            editor.apply()
+
+            mainActivity.accountFragment = AccountNotLoginFragment()
+            mainActivity.makeCurrentFragment(AccountNotLoginFragment())
         }
 
         return inflate

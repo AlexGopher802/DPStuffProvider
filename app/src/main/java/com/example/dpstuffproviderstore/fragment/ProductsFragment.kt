@@ -48,15 +48,18 @@ class ProductsFragment : Fragment() {
                                         response: Response<List<ProductData>>
                 ) {
                     if(response.code() == 200){
-                        inflate.recyclerProducts.adapter = ProductAdapter(response.body()!!)
+                        inflate.recyclerProducts.adapter = ProductAdapter(response.body()!!, this@ProductsFragment)
                     }
                     else{
-                        Toast.makeText(context!!, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
+                        val fragment = ErrorFragment()
+                        fragment.statusCode = response.code().toString()
+                        mainActivity.makeCurrentFragment(fragment)
                     }
                 }
 
                 override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
-                    Toast.makeText(context!!, t.message, Toast.LENGTH_LONG).show()
+                    val fragment = ErrorFragment()
+                    mainActivity.makeCurrentFragment(fragment)
                 }
             })
         }
@@ -68,15 +71,18 @@ class ProductsFragment : Fragment() {
                                         response: Response<List<ProductData>>
                 ) {
                     if(response.code() == 200){
-                        inflate.recyclerProducts.adapter = ProductAdapter(response.body()!!)
+                        inflate.recyclerProducts.adapter = ProductAdapter(response.body()!!, this@ProductsFragment)
                     }
                     else{
-                        Toast.makeText(context!!, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
+                        val fragment = ErrorFragment()
+                        fragment.statusCode = response.code().toString()
+                        mainActivity.makeCurrentFragment(fragment)
                     }
                 }
 
                 override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
-                    Toast.makeText(context!!, t.message, Toast.LENGTH_LONG).show()
+                    val fragment = ErrorFragment()
+                    mainActivity.makeCurrentFragment(fragment)
                 }
             })
         }

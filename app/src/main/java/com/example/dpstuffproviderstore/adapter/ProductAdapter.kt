@@ -9,10 +9,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import com.example.dpstuffproviderstore.`interface`.ICategory
 import com.example.dpstuffproviderstore.`interface`.IProduct
+import com.example.dpstuffproviderstore.fragment.ErrorFragment
 import com.example.dpstuffproviderstore.fragment.ProductsFragment
 import com.example.dpstuffproviderstore.models.CategoryData
 import com.example.dpstuffproviderstore.models.ProductData
@@ -25,7 +28,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-internal class ProductAdapter(private var productsList: List<ProductData>) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
+internal class ProductAdapter(private var productsList: List<ProductData>, private var fragment: Fragment) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val productImage: ImageView = view.findViewById(R.id.imageProduct)
         val productPrice: TextView = view.findViewById(R.id.tvPrice)
@@ -70,12 +73,17 @@ internal class ProductAdapter(private var productsList: List<ProductData>) : Rec
                             .into(holder.productImage)
                 }
                 else{
-                    Toast.makeText(holder.itemView.context, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
+                    val mainActivity = fragment.activity as MainActivity
+                    val fragment = ErrorFragment()
+                    fragment.statusCode = response.code().toString()
+                    mainActivity.makeCurrentFragment(fragment)
                 }
             }
 
             override fun onFailure(call: Call<List<ProductImagesData>>, t: Throwable){
-                Toast.makeText(holder.itemView.context, t.message, Toast.LENGTH_LONG).show()
+                val mainActivity = fragment.activity as MainActivity
+                val fragment = ErrorFragment()
+                mainActivity.makeCurrentFragment(fragment)
             }
         })
     }

@@ -17,6 +17,7 @@ import com.example.dpstuffproviderstore.adapter.CategoryAdapter
 import com.example.dpstuffproviderstore.models.CategoryData
 import kotlinx.android.synthetic.main.fragment_catalog.*
 import kotlinx.android.synthetic.main.fragment_catalog.view.*
+import kotlinx.android.synthetic.main.fragment_error.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -27,7 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class CatalogFragment() : Fragment() {
 
-    var categoryList : List<CategoryData> = listOf()
     var inflate : View? = null
 
     val retrofit = Retrofit.Builder()
@@ -54,12 +54,17 @@ class CatalogFragment() : Fragment() {
                         inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, this@CatalogFragment, null)
                     }
                     else{
-                        Toast.makeText(context!!, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
+                        val mainActivity = activity as MainActivity
+                        val fragment = ErrorFragment()
+                        fragment.statusCode = response.code().toString()
+                        mainActivity.makeCurrentFragment(fragment)
                     }
                 }
 
                 override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
-                    Toast.makeText(context!!, t.message, Toast.LENGTH_LONG).show()
+                    val mainActivity = activity as MainActivity
+                    val fragment = ErrorFragment()
+                    mainActivity.makeCurrentFragment(fragment)
                 }
             })
 

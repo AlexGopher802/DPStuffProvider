@@ -23,6 +23,7 @@ import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import com.example.dpstuffproviderstore.`interface`.ICategory
 import com.example.dpstuffproviderstore.fragment.CatalogFragment
+import com.example.dpstuffproviderstore.fragment.ErrorFragment
 import com.example.dpstuffproviderstore.fragment.HomeFragment
 import com.example.dpstuffproviderstore.fragment.ProductsFragment
 import com.example.dpstuffproviderstore.models.CategoryData
@@ -102,10 +103,18 @@ internal class CategoryAdapter(private var categoryList: List<CategoryData>, pri
                                         fragment.inflate!!.categoryImg.visibility = View.GONE
                                         fragment.inflate!!.btnUndo.visibility = View.GONE
                                     }
+                                    else{
+                                        val mainActivity = fragment.activity as MainActivity
+                                        val fragment = ErrorFragment()
+                                        fragment.statusCode = response.code().toString()
+                                        mainActivity.makeCurrentFragment(fragment)
+                                    }
                                 }
 
                                 override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
-                                    Toast.makeText(holder.itemView.context, t.message, Toast.LENGTH_LONG).show()
+                                    val mainActivity = fragment.activity as MainActivity
+                                    val fragment = ErrorFragment()
+                                    mainActivity.makeCurrentFragment(fragment)
                                 }
                             })
 
@@ -127,7 +136,9 @@ internal class CategoryAdapter(private var categoryList: List<CategoryData>, pri
                 }
 
                 override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
-                    Toast.makeText(holder.itemView.context, t.message, Toast.LENGTH_LONG).show()
+                    val mainActivity = fragment.activity as MainActivity
+                    val fragment = ErrorFragment()
+                    mainActivity.makeCurrentFragment(fragment)
                 }
             })
         }

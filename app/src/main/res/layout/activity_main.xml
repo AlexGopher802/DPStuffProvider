@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/windowBackground"
-            app:itemBackground="@color/mainDark"
-            app:itemIconTint="#fff"
-            app:itemTextColor="#fff"
+            app:itemBackground="@color/white"
+            app:itemIconTint="@color/mainDark"
+            app:itemTextColor="@color/mainDark"
             app:menu="@menu/nav_menu"/>
 
     </androidx.cardview.widget.CardView>

@@ -1,6 +1,7 @@
 package com.example.dpstuffproviderstore.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
+import com.example.dpstuffproviderstore.R.string
 import com.example.dpstuffproviderstore.`interface`.IProduct
 import com.example.dpstuffproviderstore.adapter.ProductAdapter
 import com.example.dpstuffproviderstore.models.ProductData
@@ -32,26 +34,30 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val inflate = inflater.inflate(R.layout.fragment_home, container, false)
 
         inflate.recyclerBestProducts.layoutManager = LinearLayoutManager(context!!)
-
-        val mainActivity = activity as MainActivity
 
         api.GetAllProducts().enqueue(object : Callback<List<ProductData>> {
             override fun onResponse(call: Call<List<ProductData>>,
                                     response: Response<List<ProductData>>
             ) {
                 if(response.code() == 200){
-                    inflate.recyclerBestProducts.adapter = ProductAdapter(response.body()!!)
+                    inflate.recyclerBestProducts.adapter = ProductAdapter(response.body()!!, this@HomeFragment)
                 }
                 else{
-                    Toast.makeText(context!!, "Error-code: ${response.code()}", Toast.LENGTH_LONG).show()
+                    val mainActivity = activity as MainActivity
+                    val fragment = ErrorFragment()
+                    fragment.statusCode = response.code().toString()
+                    mainActivity.makeCurrentFragment(fragment)
                 }
             }
 
             override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
-                Toast.makeText(context!!, t.message, Toast.LENGTH_LONG).show()
+                val mainActivity = activity as MainActivity
+                val fragment = ErrorFragment()
+                mainActivity.makeCurrentFragment(fragment)
             }
         })
 
