@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DPSP_Api.Models.Views
 {
+    [Serializable]
     public class ClientsView
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Patronymic { get; set; }
@@ -33,6 +36,11 @@ namespace DPSP_Api.Models.Views
 
             Phone = contact.Phone;
             Email = contact.Email;
+        }
+
+        public ClientsView()
+        {
+
         }
     }
 }

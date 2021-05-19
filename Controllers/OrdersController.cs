@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DPSP_Api.Models;
+using DPSP_Api.Models.Views;
 
 namespace DPSP_Api.Controllers
 {
@@ -61,13 +62,13 @@ namespace DPSP_Api.Controllers
         /// </summary>
         [Route("[action]/{id}")]
         [HttpGet]
-        public ActionResult<ClientView> GetClient(int id)
+        public ActionResult<ClientsView> GetClient(int id)
         {
             var clientOrder = from client in _context.Clients
                               where client.Id == id
                               join person in _context.PersonalInfos on client.IdPersonalInfo equals person.Id
                               join contacts in _context.Contacts on client.IdContacts equals contacts.Id
-                              select new ClientView(client, person, contacts);
+                              select new ClientsView(client, person, contacts);
 
             if(clientOrder.Count() == 0)
             {

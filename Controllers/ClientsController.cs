@@ -37,6 +37,37 @@ namespace DPSP_Api.Controllers
             }
 
             return new ObjectResult(result);
-        } 
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult<ClientsView> RegClient(ClientsView clientInfo, string noHashPassword)
+        {
+            PersonalInfo person = new PersonalInfo() { LastName = clientInfo.LastName, FirstName = clientInfo.FirstName, Patronymic = clientInfo.Patronymic };
+            _context.PersonalInfos.Add(person);
+
+            Contact contact = new Contact() { Email = clientInfo.Email, Phone = clientInfo.Phone };
+            _context.Contacts.Add(contact);
+
+            Client client = new Client() { IdPersonalInfoNavigation = person, IdContactsNavigation = contact, Login = clientInfo.Login,
+                Password = SHA256.Create().ComputeHash(Encoding.Default.GetBytes(noHashPassword))
+            };
+            _context.Clients.Add(client);
+
+            _context.SaveChanges();
+
+            var result = from clientR in _context.Clients
+                         where clientR.Login == clientInfo.Login
+                         join personR in _context.PersonalInfos on clientR.IdPersonalInfo equals personR.Id
+                         join contacts in _context.Contacts on clientR.IdContacts equals contacts.Id
+                         select new ClientsView(clientR, personR, contacts);
+
+            if (result.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
+        }
     }
 }
