@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import com.example.dpstuffproviderstore.models.ClientData
 import com.example.dpstuffproviderstore.other.ClientApiService
@@ -19,8 +21,13 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val inflate = inflater.inflate(R.layout.fragment_registration, container, false)
+        val mainActivity = activity as MainActivity
 
         inflate.btnReg.setOnClickListener {
+            if(!validForm()){
+                return@setOnClickListener Unit
+            }
+            Log.i("myLog", "Регистрация пошла...")
             val client = ClientData(
                     id = null,
                     lastName = inputTextLastName.text.toString(),
@@ -34,10 +41,11 @@ class RegistrationFragment : Fragment() {
 
             ClientApiService().addClient(client, inputTextPassword.text.toString()){
                 if(it != null){
-                    Log.i("myLog", "регистрация успешна, нихуя (а мб и нет)")
+                    Toast.makeText(context!!, "Регистрация успешна", Toast.LENGTH_LONG).show()
+                    mainActivity.makeCurrentFragment(AccountNotLoginFragment())
                 }
                 else{
-                    Log.i("myLog", "пиздык чирик")
+                    Toast.makeText(context!!, "Что-то пошло не по плану, повторите позже", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -45,4 +53,23 @@ class RegistrationFragment : Fragment() {
         return inflate
     }
 
+    fun validForm() : Boolean{
+        if(inputTextFirstName.text.isNullOrEmpty() ||
+                inputTextLastName.text.isNullOrEmpty() ||
+                inputTextPatronymic.text.isNullOrEmpty() ||
+                inputTextEmail.text.isNullOrEmpty() ||
+                inputTextPhone.text.isNullOrEmpty() ||
+                inputTextLogin.text.isNullOrEmpty() ||
+                inputTextPassword.text.isNullOrEmpty()){
+            Toast.makeText(context!!, "Заполните все поля", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(inputTextPassword.text.toString() != inputTextRepeatPassword.text.toString()){
+            Toast.makeText(context!!, "Пароли не совпадают", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        return true
+    }
 }

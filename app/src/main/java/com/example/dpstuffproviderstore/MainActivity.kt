@@ -31,14 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE)
         if(sharedPreferences.getBoolean("isLogin", false)){
-            accountFragment = AccountFragment()
-
             ClientApiService().getClient(sharedPreferences.getString("login", "")!!, sharedPreferences.getString("password", "")!!){
                 if (it != null){
                     client = it
+                    accountFragment = AccountFragment()
                 }
                 else{
-                    Log.i("myLog", "ХуеТА")
+                    accountFragment = AccountNotLoginFragment()
                 }
             }
         }

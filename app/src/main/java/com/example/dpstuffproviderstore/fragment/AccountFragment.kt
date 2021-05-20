@@ -27,6 +27,7 @@ class AccountFragment : Fragment() {
             editor.apply()
 
             mainActivity.accountFragment = AccountNotLoginFragment()
+            mainActivity.client = null
             mainActivity.makeCurrentFragment(AccountNotLoginFragment())
         }
 
