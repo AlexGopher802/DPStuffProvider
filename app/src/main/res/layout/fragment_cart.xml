@@ -1,36 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.CartFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvCartTitle"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textAlignment="center"
-            android:textSize="22sp"
-            android:textColor="@color/mainDark"
-            android:text="Ваша корзина пока пуста..."/>
-
-        <Button
-            android:id="@+id/btnGoToCatalog"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:background="@color/mainButton"
-            android:textColor="@color/mainDark"
-            android:layout_below="@id/tvCartTitle"
             android:layout_centerHorizontal="true"
-            android:textSize="12sp"
-            android:layout_marginTop="25dp"
-            android:text="Каталог"/>
+            android:layout_alignParentTop="true"
+            app:contentPaddingTop="15dp"
+            app:contentPaddingBottom="15dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:textColor="@color/mainDark"
+                android:text="4 Товара:"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/cardTitle"
+            android:layout_above="@id/cardCheckout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            tools:listitem="@layout/item_product"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:contentPaddingTop="15dp"
+            app:contentPaddingBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/tvCheckout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="30dp"
+                android:textSize="22sp"
+                android:textColor="@color/mainDark"
+                android:text="Итого: 10900 ₽"/>
+
+            <Button
+                android:id="@+id/btnCheckout"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="30dp"
+                android:background="@color/mainButton"
+                android:textColor="@color/mainDark"
+                android:textSize="12sp"
+                android:text="К оформлению"/>
+
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 

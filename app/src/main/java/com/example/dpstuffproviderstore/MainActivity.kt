@@ -3,7 +3,6 @@ package com.example.dpstuffproviderstore
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.dpstuffproviderstore.fragment.*
 import com.example.dpstuffproviderstore.models.ClientData
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         val homeFragment = HomeFragment()
         val catalogFragment = CatalogFragment()
-        val cartFragment = CartFragment()
+        val cartFragment = CartEmptyFragment()
 
         val sharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE)
         if(sharedPreferences.getBoolean("isLogin", false)){
