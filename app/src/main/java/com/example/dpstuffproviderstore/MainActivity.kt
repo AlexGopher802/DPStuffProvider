@@ -6,8 +6,13 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.dpstuffproviderstore.fragment.*
 import com.example.dpstuffproviderstore.models.ClientData
+import com.example.dpstuffproviderstore.models.ProductData
 import com.example.dpstuffproviderstore.other.ClientApiService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.reflect.Type
+import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,15 +23,15 @@ class MainActivity : AppCompatActivity() {
     var productName : String = ""
     var modeSearch = EnumModeSearch.CATEGORY
     var client: ClientData? = null
+    var cartList: ArrayList<ProductData>? = null
 
-    var accountFragment: Fragment? = null
+    var accountFragment: Fragment = AccountNotLoginFragment()
+    var homeFragment: Fragment = HomeFragment()
+    var catalogFragment: Fragment = CatalogFragment()
+    var cartFragment: Fragment = CartEmptyFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val homeFragment = HomeFragment()
-        val catalogFragment = CatalogFragment()
-        val cartFragment = CartEmptyFragment()
 
         val sharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE)
         if(sharedPreferences.getBoolean("isLogin", false)){
@@ -40,8 +45,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        else{
-            accountFragment = AccountNotLoginFragment()
+
+        var jsonString: String? = sharedPreferences.getString("cartList", "")
+        if(!jsonString.isNullOrEmpty()){
+            cartList = Gson().fromJson(jsonString, Array<ProductData>::class.java) as ArrayList<ProductData>
+            cartFragment = CartEmptyFragment()
         }
 
         setContentView(R.layout.activity_main)

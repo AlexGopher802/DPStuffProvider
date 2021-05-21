@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp">
+
+    <ImageView
+        android:id="@+id/imageProduct"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/img_placeholder"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageProduct"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:textSize="17sp"
+        android:textColor="@color/mainDark"
+        android:text="10990 ₽"/>
+
+    <TextView
+        android:id="@+id/tvTitleProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageProduct"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tvPrice"
+        android:layout_marginBottom="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/mainDark"
+        android:text="Монитор Philips z320 Philips z320 Philips z320 Philips z320"/>
+
+    <TextView
+        android:id="@+id/tvStoreProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageProduct"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tvTitleProduct"
+        android:layout_marginBottom="5dp"
+        android:textSize="15sp"
+        android:text="Магазин: МВидео"/>
+
+    <TextView
+        android:id="@+id/tvRatingProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageProduct"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tvStoreProduct"
+        android:layout_marginBottom="10dp"
+        android:textSize="15sp"
+        android:text="Рейтинг: 4.5/5"/>
+
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tvRatingProduct"
+        android:layout_toEndOf="@id/imageProduct"
+        android:text="+"
+        android:background="@color/white"
+        android:textColor="@color/mainDark"/>
+
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tvRatingProduct"
+        android:layout_toEndOf="@id/btnPlus"
+        android:layout_marginLeft="20dp"
+        android:text="-"
+        android:background="@color/white"
+        android:textColor="@color/mainDark"/>
+
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvRatingProduct"
+        android:layout_toEndOf="@id/btnMinus"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/mainDark"
+        android:textSize="18sp"
+        android:text="1 Шт"/>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tvRatingProduct"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:text="0"
+        android:background="@color/white"
+        android:textColor="@color/mainDark"/>
+
+</RelativeLayout>

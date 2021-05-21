@@ -9,6 +9,7 @@ import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_cart.view.*
+import kotlinx.android.synthetic.main.fragment_cart_empty.view.*
 
 class CartEmptyFragment : Fragment() {
 

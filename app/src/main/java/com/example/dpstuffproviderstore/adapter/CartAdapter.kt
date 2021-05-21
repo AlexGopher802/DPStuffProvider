@@ -31,30 +31,30 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-internal class ProductAdapter(private var productsList: List<ProductData>, private var fragment: Fragment) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
+internal class CartAdapter(private var productsList: List<ProductData>, private var fragment: Fragment) : RecyclerView.Adapter<CartAdapter.MyViewHolder>() {
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val productImage: ImageView = view.findViewById(R.id.imageProduct)
         val productPrice: TextView = view.findViewById(R.id.tvPrice)
         val productTitle: TextView = view.findViewById(R.id.tvTitleProduct)
         val productStore: TextView = view.findViewById(R.id.tvStoreProduct)
         val productRating: TextView = view.findViewById(R.id.tvRatingProduct)
-        val btnCart: Button = view.findViewById(R.id.btnAddCart)
+
     }
 
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_product, parent, false)
+                .inflate(R.layout.item_cart, parent, false)
         return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ProductAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CartAdapter.MyViewHolder, position: Int) {
         holder.productPrice.text = "${productsList[position].price} ₽"
         holder.productTitle.text = productsList[position].name
         holder.productStore.text = "Магазин: ${productsList[position].store}"
         holder.productRating.text = "Рейтинг: ${productsList[position].rating}/5"
 
-        holder.btnCart.setOnClickListener {
+        /*holder.btnCart.setOnClickListener {
             Toast.makeText(holder.itemView.context, "${productsList[position].name} Добавлен в корзину", Toast.LENGTH_LONG).show()
             val mainActivity = fragment.activity as MainActivity
             mainActivity.cartList!!.add(productsList[position])
@@ -62,7 +62,7 @@ internal class ProductAdapter(private var productsList: List<ProductData>, priva
             val editor = mainActivity.getSharedPreferences("sp", Context.MODE_PRIVATE).edit()
             editor.putString("cartList", Gson().toJson(mainActivity.cartList!!))
             editor.apply()
-        }
+        }*/
 
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")

@@ -34,13 +34,14 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_below="@id/cardTitle"
             android:layout_above="@id/cardCheckout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            tools:listitem="@layout/item_product"/>
+            tools:listitem="@layout/item_cart"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardCheckout"
