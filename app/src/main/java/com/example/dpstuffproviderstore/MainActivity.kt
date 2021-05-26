@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        sharedPreferences.edit().clear().apply()
         var jsonString: String? = sharedPreferences.getString("cartList", "")
         if(!jsonString.isNullOrEmpty()){
             cartList = Gson().fromJson(jsonString, Array<ProductData>::class.java) as ArrayList<ProductData>
