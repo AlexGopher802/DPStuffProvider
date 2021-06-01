@@ -21,6 +21,9 @@ namespace DPSP_Api.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Авторизация клиента по логину и паролю
+        /// </summary>
         [HttpGet]
         [Route("{login}/{password}")]
         public ActionResult<ClientsView> GetClient(string login, string password)
@@ -39,6 +42,9 @@ namespace DPSP_Api.Controllers
             return new ObjectResult(result);
         }
 
+        /// <summary>
+        /// Регистрация нового пользователя
+        /// </summary>
         [HttpPost]
         [Route("[action]")]
         public ActionResult<ClientsView> RegClient(ClientsView clientInfo, string noHashPassword)

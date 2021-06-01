@@ -106,6 +106,9 @@ namespace DPSP_Api.Controllers
             return new ObjectResult(clientOrder);
         }
 
+        /// <summary>
+        /// Регистрация нового заказа
+        /// </summary>
         [Route("[action]")]
         [HttpPost]
         public ActionResult<OrdersView> RegOrder(OrdersView newOrder)
