@@ -16,6 +16,7 @@ import com.example.dpstuffproviderstore.other.ClientApiService
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_checkout.*
 import kotlinx.android.synthetic.main.fragment_checkout.view.*
+import java.util.*
 
 class CheckoutFragment : Fragment() {
 
@@ -32,17 +33,42 @@ class CheckoutFragment : Fragment() {
         //inflate!!.dateDelivery.minDate = java.util.Calendar.getInstance()
         inflate!!.tvCheckoutConfirm.text = "Итого: ${checkSumm} ₽"
 
+        var c = Calendar.getInstance()
+        c.add(Calendar.DAY_OF_MONTH, 1)
+        inflate!!.dateDelivery.minDate = c.timeInMillis
+        c.add(Calendar.DAY_OF_MONTH, 14)
+        inflate!!.dateDelivery.maxDate = c.timeInMillis
+
+        var frontDoor : Int? = null
+        var apartNum : Int? = null
+        var floorNum : Int? = null
+
+        if(!inflate!!.inputTextFrontDoorCheckout.text.isNullOrEmpty()){
+            frontDoor = inflate!!.inputTextFrontDoorCheckout.text.toString().toInt()
+        }
+
+        if(!inflate!!.inputTextApartCheckout.text.isNullOrEmpty()){
+            apartNum = inflate!!.inputTextApartCheckout.text.toString().toInt()
+        }
+
+        if(!inflate!!.inputTextFloorCheckout.text.isNullOrEmpty()){
+            floorNum = inflate!!.inputTextFloorCheckout.text.toString().toInt()
+        }
+
         inflate!!.btnCheckoutConfirm.setOnClickListener {
-            //Toast.makeText(requireContext(), "${inflate!!.spinnerTimeFrom.selectedItem}", Toast.LENGTH_LONG).show()
+            if(!validForm()){
+                return@setOnClickListener
+            }
+
             val newOrder = OrderData(
                     id = null,
                     address = inflate!!.inputTextAddressCheckout.text.toString(),
                     lastName = mainActivity.client!!.lastName,
                     firstName = mainActivity.client!!.firstName,
                     phone = mainActivity.client!!.phone,
-                    frontDoor = inflate!!.inputTextFrontDoorCheckout.text.toString().toInt(),
-                    apartNum = inflate!!.inputTextApartCheckout.text.toString().toInt(),
-                    floorNum = inflate!!.inputTextFloorCheckout.text.toString().toInt(),
+                    frontDoor = frontDoor,
+                    apartNum = apartNum,
+                    floorNum = floorNum,
                     intercom = inflate!!.inputTextIntercomCheckout.text.toString(),
                     deliveryDate = "${inflate!!.dateDelivery.dayOfMonth}.${inflate!!.dateDelivery.month + 1}.${inflate!!.dateDelivery.year}",
                     timeFrom = inflate!!.spinnerTimeFrom.selectedItem.toString(),
@@ -73,5 +99,19 @@ class CheckoutFragment : Fragment() {
         }
 
         return inflate
+    }
+
+    fun validForm(): Boolean{
+        if(inflate!!.inputTextAddressCheckout.text.isNullOrEmpty()){
+            Toast.makeText(requireContext(), "Поле адреса обязательно для заполнения", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(inflate!!.spinnerTimeFrom.selectedItemId >= inflate!!.spinnerTimeTo.selectedItemId){
+            Toast.makeText(requireContext(), "Некорректное время доставки", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        return true
     }
 }

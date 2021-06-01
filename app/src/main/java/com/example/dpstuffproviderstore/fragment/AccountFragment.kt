@@ -10,6 +10,9 @@ import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import kotlinx.android.synthetic.main.fragment_account.view.*
 
+/**
+ * Фрагмент аккаунта залогиненного пользователя
+ */
 class AccountFragment : Fragment() {
 
     var testText: String? = null

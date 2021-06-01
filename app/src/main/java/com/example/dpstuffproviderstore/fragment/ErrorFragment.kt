@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import com.example.dpstuffproviderstore.R
 import kotlinx.android.synthetic.main.fragment_error.view.*
 
+/**
+ * Фрагмент заглушки на случай ошибок (не отвечает api)
+ */
 class ErrorFragment : Fragment() {
 
     var statusCode : String = "404"

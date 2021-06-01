@@ -23,6 +23,7 @@ import com.example.dpstuffproviderstore.fragment.ProductsFragment
 import com.example.dpstuffproviderstore.models.CategoryData
 import com.example.dpstuffproviderstore.models.ProductData
 import com.example.dpstuffproviderstore.models.ProductImagesData
+import com.example.dpstuffproviderstore.other.ClientApiService
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_cart.view.*
@@ -34,6 +35,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Адаптер для заполнения корзины
+ */
 internal class CartAdapter(private var productsList: List<ProductData>, private var fragment: CartFragment) : RecyclerView.Adapter<CartAdapter.MyViewHolder>() {
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val productImage: ImageView = view.findViewById(R.id.imageProductCart)
@@ -41,7 +45,7 @@ internal class CartAdapter(private var productsList: List<ProductData>, private 
         val productTitle: TextView = view.findViewById(R.id.tvTitleProductCart)
         val productStore: TextView = view.findViewById(R.id.tvStoreProductCart)
         val productRating: TextView = view.findViewById(R.id.tvRatingProductCart)
-        val poductQuantity: TextView = view.findViewById(R.id.tvQuantityCart)
+        val productQuantity: TextView = view.findViewById(R.id.tvQuantityCart)
 
         val btnPlus: Button = view.findViewById(R.id.btnPlusCart)
         val btnMinus: Button = view.findViewById(R.id.btnMinusCart)
@@ -62,37 +66,22 @@ internal class CartAdapter(private var productsList: List<ProductData>, private 
         holder.productTitle.text = productsList[position].name
         holder.productStore.text = "Магазин: ${productsList[position].store}"
         holder.productRating.text = "Рейтинг: ${productsList[position].rating}/5"
-        holder.poductQuantity.text = "${productsList[position].quantity ?: 1} Шт"
+        holder.productQuantity.text = "${productsList[position].quantity ?: 1} Шт"
 
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        val api = retrofit.create(IProduct::class.java)
-
-        api.GetImages(productsList[position].id).enqueue(object : Callback<List<ProductImagesData>> {
-            override fun onResponse(call: Call<List<ProductImagesData>>,
-                                    response: Response<List<ProductImagesData>>
-            ) {
-                if(response.code() == 200){
-                    Picasso.with(holder.itemView.context)
-                            .load(response.body()!![0].imageUrl)
-                            .placeholder(R.drawable.img_placeholder)
-                            .error(R.drawable.img_placeholder)
-                            .into(holder.productImage)
-                }
-                else{
-                    val fragment = ErrorFragment()
-                    fragment.statusCode = response.code().toString()
-                    mainActivity.makeCurrentFragment(fragment)
-                }
+        ClientApiService().getImages(productsList[position].id) {
+            if(it != null) {
+                Picasso.with(holder.itemView.context)
+                        .load(it!![0].imageUrl)
+                        .placeholder(R.drawable.img_placeholder)
+                        .error(R.drawable.img_placeholder)
+                        .into(holder.productImage)
             }
-
-            override fun onFailure(call: Call<List<ProductImagesData>>, t: Throwable){
+            else{
                 val fragment = ErrorFragment()
+                fragment.statusCode = "404"
                 mainActivity.makeCurrentFragment(fragment)
             }
-        })
+        }
 
         holder.btnPlus.setOnClickListener {
             mainActivity.cartList[position].quantity = (productsList[position].quantity ?: 1) + 1
@@ -100,7 +89,7 @@ internal class CartAdapter(private var productsList: List<ProductData>, private 
             editor.putString("cartList", Gson().toJson(mainActivity.cartList))
             editor.apply()
 
-            holder.poductQuantity.text = "${mainActivity.cartList[position].quantity ?: 1} Шт"
+            holder.productQuantity.text = "${mainActivity.cartList[position].quantity ?: 1} Шт"
 
             var summ : Double = 0.0
             for(i in mainActivity.cartList){
@@ -145,7 +134,7 @@ internal class CartAdapter(private var productsList: List<ProductData>, private 
                 editor.putString("cartList", Gson().toJson(mainActivity.cartList))
                 editor.apply()
 
-                holder.poductQuantity.text = "${mainActivity.cartList[position].quantity ?: 1} Шт"
+                holder.productQuantity.text = "${mainActivity.cartList[position].quantity ?: 1} Шт"
 
                 var summ : Double = 0.0
                 for(i in mainActivity.cartList){
@@ -159,7 +148,6 @@ internal class CartAdapter(private var productsList: List<ProductData>, private 
         holder.btnTrash.setOnClickListener {
             removeProduct(productsList[position])
         }
-
     }
 
     override fun getItemCount(): Int {

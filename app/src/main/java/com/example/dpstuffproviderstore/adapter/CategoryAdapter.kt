@@ -27,6 +27,7 @@ import com.example.dpstuffproviderstore.fragment.ErrorFragment
 import com.example.dpstuffproviderstore.fragment.HomeFragment
 import com.example.dpstuffproviderstore.fragment.ProductsFragment
 import com.example.dpstuffproviderstore.models.CategoryData
+import com.example.dpstuffproviderstore.other.ClientApiService
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,7 +40,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
-//Когда-нибудь я обязательно исправлю этот пиздец
+/**
+ * Адаптер для заполнения категорий каталога
+ */
 internal class CategoryAdapter(private var categoryList: List<CategoryData>, private var fragment: CatalogFragment, private var parentCategoryList: List<CategoryData>?) : RecyclerView.Adapter<CategoryAdapter.MyViewHolder>(){
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val title : TextView = view.findViewById(R.id.tvTitleCategory)
@@ -56,91 +59,69 @@ internal class CategoryAdapter(private var categoryList: List<CategoryData>, pri
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.title.text = categoryList[position].name
 
-
         holder.cardCategory.setOnClickListener {
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            val api = retrofit.create(ICategory::class.java)
+            ClientApiService().getChildCategories(categoryList[position].name) {
 
-            api.GetChildCategories(categoryList[position].name).enqueue(object : Callback<List<CategoryData>> {
-                override fun onResponse(call: Call<List<CategoryData>>,
-                                        response: Response<List<CategoryData>>
-                ) {
-                    if(response.code() == 200){
-                        fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, fragment, categoryList)
-                        fragment.inflate!!.titleCategory.visibility = View.VISIBLE
-                        fragment.inflate!!.titleCategory.text = response.body()!![0].parentName
-                        fragment.inflate!!.linkToCategory.visibility = View.VISIBLE
-                        fragment.inflate!!.categoryImg.visibility = View.VISIBLE
+                if(it != null){
+                    fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(it, fragment, categoryList)
+                    fragment.inflate!!.titleCategory.visibility = View.VISIBLE
+                    fragment.inflate!!.titleCategory.text = it[0].parentName
+                    fragment.inflate!!.linkToCategory.visibility = View.VISIBLE
+                    fragment.inflate!!.categoryImg.visibility = View.VISIBLE
 
-                        if(!categoryList[position].imageUrl.isEmpty()){
-                            Picasso.with(holder.itemView.context)
-                                    .load(categoryList[position].imageUrl)
-                                    .placeholder(R.drawable.img_placeholder)
-                                    .error(R.drawable.img_placeholder)
-                                    .into(fragment.inflate!!.categoryImg)
-                        }
-                        else{
-                            fragment.inflate!!.categoryImg.visibility = View.GONE
-                        }
-
-                        fragment.inflate!!.btnUndo.visibility = View.VISIBLE
-
-
-                        fragment.inflate!!.btnUndo.setOnClickListener {
-                            api.GetMainCategories().enqueue(object : Callback<List<CategoryData>> {
-                                override fun onResponse(call: Call<List<CategoryData>>,
-                                                        response: Response<List<CategoryData>>
-                                ) {
-                                    if(response.code() == 200){
-                                        fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, fragment, null)
-
-                                        fragment.inflate!!.titleCategory.visibility = View.GONE
-                                        fragment.inflate!!.linkToCategory.visibility = View.GONE
-                                        fragment.inflate!!.categoryImg.visibility = View.GONE
-                                        fragment.inflate!!.btnUndo.visibility = View.GONE
-                                    }
-                                    else{
-                                        val mainActivity = fragment.activity as MainActivity
-                                        val fragment = ErrorFragment()
-                                        fragment.statusCode = response.code().toString()
-                                        mainActivity.makeCurrentFragment(fragment)
-                                    }
-                                }
-
-                                override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
-                                    val mainActivity = fragment.activity as MainActivity
-                                    val fragment = ErrorFragment()
-                                    mainActivity.makeCurrentFragment(fragment)
-                                }
-                            })
-
-                        }
-
-                        fragment.inflate!!.linkToCategory.setOnClickListener {
-                            val mainActivity = fragment.activity as MainActivity
-                            mainActivity.modeSearch = MainActivity.EnumModeSearch.CATEGORY
-                            mainActivity.productCategory = fragment.inflate!!.titleCategory.text.toString()
-                            mainActivity.makeCurrentFragment(ProductsFragment())
-                        }
+                    if(!categoryList[position].imageUrl.isNullOrEmpty()){
+                        Picasso.with(holder.itemView.context)
+                                .load(categoryList[position].imageUrl)
+                                .placeholder(R.drawable.img_placeholder)
+                                .error(R.drawable.img_placeholder)
+                                .into(fragment.inflate!!.categoryImg)
                     }
                     else{
+                        fragment.inflate!!.categoryImg.visibility = View.GONE
+                    }
+
+                    fragment.inflate!!.btnUndo.visibility = View.VISIBLE
+
+                    fragment.inflate!!.btnUndo.setOnClickListener {
+                        ClientApiService().getMainCategories() {
+
+                            if(it != null){
+                                fragment.inflate!!.recyclerCategory.adapter = CategoryAdapter(it, fragment, null)
+
+                                fragment.inflate!!.titleCategory.visibility = View.GONE
+                                fragment.inflate!!.linkToCategory.visibility = View.GONE
+                                fragment.inflate!!.categoryImg.visibility = View.GONE
+                                fragment.inflate!!.btnUndo.visibility = View.GONE
+                            }
+                            else{
+                                val mainActivity = fragment.activity as MainActivity
+                                val fragment = ErrorFragment()
+                                fragment.statusCode = "404"
+                                mainActivity.makeCurrentFragment(fragment)
+                            }
+                        }
+                    }
+
+                    fragment.inflate!!.linkToCategory.setOnClickListener {
                         val mainActivity = fragment.activity as MainActivity
                         mainActivity.modeSearch = MainActivity.EnumModeSearch.CATEGORY
-                        mainActivity.productCategory = categoryList[position].name
+                        mainActivity.productCategory = fragment.inflate!!.titleCategory.text.toString()
                         mainActivity.makeCurrentFragment(ProductsFragment())
                     }
                 }
-
-                override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
+                else{
+                    val mainActivity = fragment.activity as MainActivity
+                    mainActivity.modeSearch = MainActivity.EnumModeSearch.CATEGORY
+                    mainActivity.productCategory = categoryList[position].name
+                    mainActivity.makeCurrentFragment(ProductsFragment())
+                }
+            }
+                /*override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
                     val mainActivity = fragment.activity as MainActivity
                     val fragment = ErrorFragment()
                     mainActivity.makeCurrentFragment(fragment)
-                }
-            })
+                }*/
         }
     }
 

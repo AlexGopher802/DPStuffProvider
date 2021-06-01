@@ -15,6 +15,7 @@ import com.example.dpstuffproviderstore.adapter.CategoryAdapter
 import com.example.dpstuffproviderstore.adapter.ProductAdapter
 import com.example.dpstuffproviderstore.models.CategoryData
 import com.example.dpstuffproviderstore.models.ProductData
+import com.example.dpstuffproviderstore.other.ClientApiService
 import kotlinx.android.synthetic.main.fragment_catalog.view.*
 import kotlinx.android.synthetic.main.fragment_products.view.*
 import retrofit2.Call
@@ -23,71 +24,49 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Фрагмент со списков товаров (по наименованию или категории)
+ */
 class ProductsFragment : Fragment() {
 
     var inflate : View? = null
 
-    val retrofit = Retrofit.Builder()
-            .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    val api = retrofit.create(IProduct::class.java)
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val inflate = inflater.inflate(R.layout.fragment_products, container, false)
-
-        inflate.recyclerProducts.layoutManager = LinearLayoutManager(context!!)
-
+        inflate = inflater.inflate(R.layout.fragment_products, container, false)
         val mainActivity = activity as MainActivity
+
+        inflate!!.recyclerProducts.layoutManager = LinearLayoutManager(context!!)
 
         if(mainActivity.modeSearch == MainActivity.EnumModeSearch.CATEGORY)
         {
-            api.GetProductsByCategory(mainActivity.productCategory).enqueue(object : Callback<List<ProductData>> {
-                override fun onResponse(call: Call<List<ProductData>>,
-                                        response: Response<List<ProductData>>
-                ) {
-                    if(response.code() == 200){
-                        inflate.recyclerProducts.adapter = ProductAdapter(response.body()!!, this@ProductsFragment)
-                    }
-                    else{
-                        val fragment = ErrorFragment()
-                        fragment.statusCode = response.code().toString()
-                        mainActivity.makeCurrentFragment(fragment)
-                    }
-                }
+            ClientApiService().getProductsByCategory(mainActivity.productCategory) {
 
-                override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
+                if(it != null){
+                    inflate!!.recyclerProducts.adapter = ProductAdapter(it, this@ProductsFragment)
+                }
+                else{
                     val fragment = ErrorFragment()
+                    fragment.statusCode = "404"
                     mainActivity.makeCurrentFragment(fragment)
                 }
-            })
+            }
         }
 
         if(mainActivity.modeSearch == MainActivity.EnumModeSearch.NAME)
         {
-            api.GetProductsByName(mainActivity.productName).enqueue(object : Callback<List<ProductData>> {
-                override fun onResponse(call: Call<List<ProductData>>,
-                                        response: Response<List<ProductData>>
-                ) {
-                    if(response.code() == 200){
-                        inflate.recyclerProducts.adapter = ProductAdapter(response.body()!!, this@ProductsFragment)
-                    }
-                    else{
-                        val fragment = ErrorFragment()
-                        fragment.statusCode = response.code().toString()
-                        mainActivity.makeCurrentFragment(fragment)
-                    }
-                }
+            ClientApiService().getProductsByName(mainActivity.productName) {
 
-                override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
+                if(it != null){
+                    inflate!!.recyclerProducts.adapter = ProductAdapter(it, this@ProductsFragment)
+                }
+                else{
                     val fragment = ErrorFragment()
+                    fragment.statusCode = "404"
                     mainActivity.makeCurrentFragment(fragment)
                 }
-            })
+            }
         }
-
-
 
         return inflate
     }

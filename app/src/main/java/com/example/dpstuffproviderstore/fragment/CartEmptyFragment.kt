@@ -11,6 +11,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_cart.view.*
 import kotlinx.android.synthetic.main.fragment_cart_empty.view.*
 
+/**
+ * Фрагмент пустой корзины
+ */
 class CartEmptyFragment : Fragment() {
 
     override fun onCreateView(

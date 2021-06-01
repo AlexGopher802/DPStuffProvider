@@ -16,6 +16,9 @@ import com.example.dpstuffproviderstore.models.OrderData
 import com.example.dpstuffproviderstore.models.ProductData
 import com.example.dpstuffproviderstore.other.ClientApiService
 
+/**
+ * Адаптер для заполнения заказов клиента
+ */
 internal class OrderAdapter(private var ordersList: List<OrderData>, private var fragment: OrdersFragment) : RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val orderInfo: TextView = view.findViewById(R.id.tvOrderInfo)

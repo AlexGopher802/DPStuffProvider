@@ -14,6 +14,7 @@ import com.example.dpstuffproviderstore.R.string
 import com.example.dpstuffproviderstore.`interface`.IProduct
 import com.example.dpstuffproviderstore.adapter.ProductAdapter
 import com.example.dpstuffproviderstore.models.ProductData
+import com.example.dpstuffproviderstore.other.ClientApiService
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_products.view.*
 import retrofit2.Call
@@ -22,13 +23,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Фрагмент домашней страницы со списком популярных товаров (пока просто выводит все товары)
+ */
 class HomeFragment : Fragment() {
-
-    val retrofit = Retrofit.Builder()
-            .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    val api = retrofit.create(IProduct::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,26 +38,17 @@ class HomeFragment : Fragment() {
 
         inflate.recyclerBestProducts.layoutManager = LinearLayoutManager(context!!)
 
-        api.GetAllProducts().enqueue(object : Callback<List<ProductData>> {
-            override fun onResponse(call: Call<List<ProductData>>,
-                                    response: Response<List<ProductData>>
-            ) {
-                if(response.code() == 200){
-                    inflate.recyclerBestProducts.adapter = ProductAdapter(response.body()!!, this@HomeFragment)
-                    //mainActivity.cartList.add(response.body()!![0])
-                }
-                else{
-                    val fragment = ErrorFragment()
-                    fragment.statusCode = response.code().toString()
-                    mainActivity.makeCurrentFragment(fragment)
-                }
-            }
+        ClientApiService().getAllProducts() {
 
-            override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
+            if(it != null){
+                inflate.recyclerBestProducts.adapter = ProductAdapter(it, this@HomeFragment)
+            }
+            else{
                 val fragment = ErrorFragment()
+                fragment.statusCode = "404"
                 mainActivity.makeCurrentFragment(fragment)
             }
-        })
+        }
 
         return inflate
     }

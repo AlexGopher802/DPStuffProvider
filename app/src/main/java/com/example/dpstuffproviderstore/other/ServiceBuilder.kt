@@ -6,6 +6,9 @@ import com.example.dpstuffproviderstore.`interface`.ICategory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Билдер retrofit с корневой ссылкой Api
+ */
 object ServiceBuilder {
     fun<T> buildService(service: Class<T>): T{
         val retrofit = Retrofit.Builder()

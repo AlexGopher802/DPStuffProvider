@@ -16,6 +16,9 @@ import com.example.dpstuffproviderstore.adapter.ProductAdapter
 import kotlinx.android.synthetic.main.fragment_cart.view.*
 import kotlinx.android.synthetic.main.fragment_products.view.*
 
+/**
+ * Фрагмент корзины, корзина заполняется по списку товаров cartList из MainActivity
+ */
 class CartFragment : Fragment() {
 
     var inflate : View? = null

@@ -14,6 +14,9 @@ import com.example.dpstuffproviderstore.other.ClientApiService
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.fragment_registration.view.*
 
+/**
+ * Фрагмент регистрации нового пользователя
+ */
 class RegistrationFragment : Fragment() {
 
     override fun onCreateView(
@@ -27,7 +30,6 @@ class RegistrationFragment : Fragment() {
             if(!validForm()){
                 return@setOnClickListener Unit
             }
-            Log.i("myLog", "Регистрация пошла...")
             val client = ClientData(
                     id = null,
                     lastName = inputTextLastName.text.toString(),
@@ -62,6 +64,16 @@ class RegistrationFragment : Fragment() {
                 inputTextLogin.text.isNullOrEmpty() ||
                 inputTextPassword.text.isNullOrEmpty()){
             Toast.makeText(context!!, "Заполните все поля", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(!inputTextEmail.text!!.contains('@') || !inputTextEmail.text!!.contains('.')){
+            Toast.makeText(context!!, "Некорректный адрес почты", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(inputTextPassword.text!!.length < 8){
+            Toast.makeText(context!!, "Пароль должени быть не короче 8-ми символов", Toast.LENGTH_LONG).show()
             return false
         }
 

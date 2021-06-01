@@ -15,6 +15,7 @@ import com.example.dpstuffproviderstore.R
 import com.example.dpstuffproviderstore.`interface`.ICategory
 import com.example.dpstuffproviderstore.adapter.CategoryAdapter
 import com.example.dpstuffproviderstore.models.CategoryData
+import com.example.dpstuffproviderstore.other.ClientApiService
 import kotlinx.android.synthetic.main.fragment_catalog.*
 import kotlinx.android.synthetic.main.fragment_catalog.view.*
 import kotlinx.android.synthetic.main.fragment_error.view.*
@@ -26,15 +27,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Фрагмент каталога с поиском товаров по наименованию и категориям
+ */
 class CatalogFragment() : Fragment() {
 
     var inflate : View? = null
-
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    val api = retrofit.create(ICategory::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,38 +40,27 @@ class CatalogFragment() : Fragment() {
     ): View? {
 
         inflate = inflater.inflate(R.layout.fragment_catalog, container, false)
+        val mainActivity = activity as MainActivity
 
         GlobalScope.launch {
             inflate!!.recyclerCategory.layoutManager = LinearLayoutManager(context!!)
 
-            api.GetMainCategories().enqueue(object : Callback<List<CategoryData>> {
-                override fun onResponse(call: Call<List<CategoryData>>,
-                                        response: Response<List<CategoryData>>
-                ) {
-                    if(response.code() == 200){
-                        inflate!!.recyclerCategory.adapter = CategoryAdapter(response.body()!!, this@CatalogFragment, null)
-                    }
-                    else{
-                        val mainActivity = activity as MainActivity
-                        val fragment = ErrorFragment()
-                        fragment.statusCode = response.code().toString()
-                        mainActivity.makeCurrentFragment(fragment)
-                    }
-                }
+            ClientApiService().getMainCategories() {
 
-                override fun onFailure(call: Call<List<CategoryData>>, t: Throwable){
-                    val mainActivity = activity as MainActivity
+                if(it != null){
+                    inflate!!.recyclerCategory.adapter = CategoryAdapter(it, this@CatalogFragment, null)
+                }
+                else{
                     val fragment = ErrorFragment()
+                    fragment.statusCode = "404"
                     mainActivity.makeCurrentFragment(fragment)
                 }
-            })
-
+            }
         }
 
         inflate!!.inputTextSearch.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
                 Log.i("myLog", "Пошёл поиск...")
-                val mainActivity = activity as MainActivity
                 mainActivity.modeSearch = MainActivity.EnumModeSearch.NAME
                 mainActivity.productName = inflate!!.inputTextSearch.text.toString()
                 mainActivity.makeCurrentFragment(ProductsFragment())

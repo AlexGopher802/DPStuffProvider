@@ -10,6 +10,9 @@ import com.example.dpstuffproviderstore.MainActivity
 import com.example.dpstuffproviderstore.R
 import kotlinx.android.synthetic.main.fragment_account_notlogin.view.*
 
+/**
+ * Фрагмент не залогиненного пользователя
+ */
 class AccountNotLoginFragment : Fragment() {
 
     override fun onCreateView(

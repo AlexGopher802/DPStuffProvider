@@ -15,7 +15,9 @@ import kotlinx.android.synthetic.main.fragment_account_login.*
 import kotlinx.android.synthetic.main.fragment_account_login.view.*
 import kotlin.math.log
 
-
+/**
+ * Фрагмент формы авторизации пользователя
+ */
 class AccountLoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

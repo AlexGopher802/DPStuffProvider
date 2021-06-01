@@ -23,6 +23,7 @@ import com.example.dpstuffproviderstore.fragment.ProductsFragment
 import com.example.dpstuffproviderstore.models.CategoryData
 import com.example.dpstuffproviderstore.models.ProductData
 import com.example.dpstuffproviderstore.models.ProductImagesData
+import com.example.dpstuffproviderstore.other.ClientApiService
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_catalog.view.*
@@ -32,6 +33,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Адаптер для заполнения информации о товарах
+ */
 internal class ProductAdapter(private var productsList: List<ProductData>, private var fragment: Fragment) : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val productImage: ImageView = view.findViewById(R.id.imageProduct)
@@ -59,7 +63,6 @@ internal class ProductAdapter(private var productsList: List<ProductData>, priva
 
         holder.btnCart.setOnClickListener {
 
-
             if(mainActivity.cartList.contains(productsList[position])){
                 Toast.makeText(holder.itemView.context, "Товар уже добавлен в корзину", Toast.LENGTH_LONG).show()
             }
@@ -75,35 +78,21 @@ internal class ProductAdapter(private var productsList: List<ProductData>, priva
             Log.i("myLog", "add to cart: ${Gson().toJson(mainActivity.cartList)}")
         }
 
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        val api = retrofit.create(IProduct::class.java)
+        ClientApiService().getImages(productsList[position].id) {
 
-        api.GetImages(productsList[position].id).enqueue(object : Callback<List<ProductImagesData>> {
-            override fun onResponse(call: Call<List<ProductImagesData>>,
-                                    response: Response<List<ProductImagesData>>
-            ) {
-                if(response.code() == 200){
-                    Picasso.with(holder.itemView.context)
-                            .load(response.body()!![0].imageUrl)
-                            .placeholder(R.drawable.img_placeholder)
-                            .error(R.drawable.img_placeholder)
-                            .into(holder.productImage)
-                }
-                else{
-                    val fragment = ErrorFragment()
-                    fragment.statusCode = response.code().toString()
-                    mainActivity.makeCurrentFragment(fragment)
-                }
+            if(it != null){
+                Picasso.with(holder.itemView.context)
+                        .load(it[0].imageUrl)
+                        .placeholder(R.drawable.img_placeholder)
+                        .error(R.drawable.img_placeholder)
+                        .into(holder.productImage)
             }
-
-            override fun onFailure(call: Call<List<ProductImagesData>>, t: Throwable){
+            else{
                 val fragment = ErrorFragment()
+                fragment.statusCode = "404"
                 mainActivity.makeCurrentFragment(fragment)
             }
-        })
+        }
     }
 
     override fun getItemCount(): Int {
