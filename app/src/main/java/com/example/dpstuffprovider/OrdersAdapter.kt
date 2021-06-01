@@ -65,14 +65,17 @@ internal class OrdersAdapter (private var ordersList: List<OrdersData>) : Recycl
                             override fun onResponse(call: Call<List<OrderComposData>>,
                                                     response: Response<List<OrderComposData>>) {
                                 if(response.code() == 200){
-                                    
+                                    Log.i("myLog", "200, заебумба")
                                     intent.putExtra("orderCompos", OrderCompos(response.body()!!))
                                     startActivity(holder.itemView.context, intent, Bundle.EMPTY)
+                                }
+                                else{
+                                    Log.i("myLog", "4**, не заебумба")
                                 }
                             }
 
                             override fun onFailure(call: Call<List<OrderComposData>>, t: Throwable){
-
+                                Log.i("myLog", "Пиздык чирик")
                             }
                         })
                     }

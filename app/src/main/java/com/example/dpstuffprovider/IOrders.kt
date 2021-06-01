@@ -11,7 +11,7 @@ interface IOrders {
     @GET("orders")
     fun GetOders(): Call<List<OrdersData>>
 
-    @GET("orders/{id}")
+    @GET("orders/getorders/{id}")
     fun GetOderCompos(@Path("id") id : Int): Call<List<OrderComposData>>
 
     @GET("orders/getclient/{id}")
