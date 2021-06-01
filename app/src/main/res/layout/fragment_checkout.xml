@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.CheckoutFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTitleCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            app:contentPaddingTop="15dp"
+            app:contentPaddingBottom="15dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/tvTitleCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:textColor="@color/mainDark"
+                android:text="Подтверждение заказа"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardTitleCheckout"
+            android:layout_above="@id/cardCheckoutConfirm">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldAddressCheckout"
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:hint="Адрес доставки"
+                    app:boxBackgroundColor="#ffffff">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTextAddressCheckout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:maxLength="100"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldFrontDoorCheckout"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+                    android:layout_below="@id/textFieldAddressCheckout"
+                    android:layout_alignStart="@id/textFieldAddressCheckout"
+                    android:layout_marginTop="5dp"
+                    android:hint="Подъезд"
+                    app:boxBackgroundColor="#ffffff">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTextFrontDoorCheckout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:maxLength="100"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldApartCheckout"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+                    android:layout_below="@id/textFieldAddressCheckout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:hint="Квартира"
+                    app:boxBackgroundColor="#ffffff">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTextApartCheckout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:maxLength="100"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldFloorCheckout"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+                    android:layout_below="@id/textFieldAddressCheckout"
+                    android:layout_alignEnd="@id/textFieldAddressCheckout"
+                    android:layout_marginTop="5dp"
+                    android:hint="Этаж"
+                    app:boxBackgroundColor="#ffffff">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTextFloorCheckout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:maxLength="100"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldIntercomCheckout"
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+                    android:layout_below="@id/textFieldApartCheckout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="Домофон"
+                    app:boxBackgroundColor="#ffffff">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTextIntercomCheckout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:maxLength="100"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tvDateTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_below="@id/textFieldIntercomCheckout"
+                    android:textSize="22sp"
+                    android:textColor="@color/mainDark"
+                    android:text="Дата доставки"/>
+
+                <DatePicker
+                    android:id="@+id/dateDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="160dp"
+                    android:layout_below="@+id/tvDateTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="30dp"
+                    android:calendarViewShown="false"
+                    android:spinnersShown="true"
+                    android:datePickerMode="spinner" />
+
+                <TextView
+                    android:id="@+id/tvTimeFromTitle"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/spinnerTimeFrom"
+                    android:layout_above="@id/spinnerTimeFrom"
+                    android:textSize="18sp"
+                    android:textColor="@color/mainDark"
+                    android:text="От"/>
+
+                <Spinner
+                    android:id="@+id/spinnerTimeFrom"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dateDelivery"
+                    android:layout_alignStart="@id/dateDelivery"
+                    android:entries="@array/deliveryTime"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/tvTimeToTitle"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/spinnerTimeTo"
+                    android:layout_above="@id/spinnerTimeFrom"
+                    android:textSize="18sp"
+                    android:textColor="@color/mainDark"
+                    android:text="До"/>
+
+                <Spinner
+                    android:id="@+id/spinnerTimeTo"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dateDelivery"
+                    android:layout_alignEnd="@id/dateDelivery"
+                    android:entries="@array/deliveryTime"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFieldCommentaryCheckout"
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="clear_text"
+                    android:layout_below="@+id/spinnerTimeFrom"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:hint="Комментарий к заказу"
+                    app:boxBackgroundColor="#ffffff">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTextCommentaryCheckout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:maxLength="300"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCheckoutConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:contentPaddingTop="15dp"
+            app:contentPaddingBottom="15dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tvCheckoutConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:textSize="20sp"
+                android:textColor="@color/mainDark"
+                android:text="Итого: 10900 ₽"/>
+
+            <Button
+                android:id="@+id/btnCheckoutConfirm"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                android:background="@color/mainButton"
+                android:textColor="@color/mainDark"
+                android:textSize="12sp"
+                android:text="Оформить"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</FrameLayout>

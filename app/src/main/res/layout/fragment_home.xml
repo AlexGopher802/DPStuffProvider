@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:textSize="22sp"
                 android:textColor="@color/mainDark"
-                android:text="Товары с лучшими отзывами:"/>
+                android:text="Популярные товары:"/>
 
         </androidx.cardview.widget.CardView>
 

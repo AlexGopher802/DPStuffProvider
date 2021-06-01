@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
     ): View? {
 
         val inflate = inflater.inflate(R.layout.fragment_home, container, false)
+        val mainActivity = activity as MainActivity
 
         inflate.recyclerBestProducts.layoutManager = LinearLayoutManager(context!!)
 
@@ -45,9 +46,9 @@ class HomeFragment : Fragment() {
             ) {
                 if(response.code() == 200){
                     inflate.recyclerBestProducts.adapter = ProductAdapter(response.body()!!, this@HomeFragment)
+                    //mainActivity.cartList.add(response.body()!![0])
                 }
                 else{
-                    val mainActivity = activity as MainActivity
                     val fragment = ErrorFragment()
                     fragment.statusCode = response.code().toString()
                     mainActivity.makeCurrentFragment(fragment)
@@ -55,7 +56,6 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<ProductData>>, t: Throwable){
-                val mainActivity = activity as MainActivity
                 val fragment = ErrorFragment()
                 mainActivity.makeCurrentFragment(fragment)
             }

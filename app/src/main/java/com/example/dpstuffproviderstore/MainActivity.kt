@@ -3,6 +3,7 @@ package com.example.dpstuffproviderstore
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.dpstuffproviderstore.fragment.*
 import com.example.dpstuffproviderstore.models.ClientData
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     var productName : String = ""
     var modeSearch = EnumModeSearch.CATEGORY
     var client: ClientData? = null
-    var cartList: ArrayList<ProductData>? = null
+    var cartList: ArrayList<ProductData> = arrayListOf()
 
     var accountFragment: Fragment = AccountNotLoginFragment()
     var homeFragment: Fragment = HomeFragment()
@@ -46,11 +47,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        sharedPreferences.edit().clear().apply()
+        //sharedPreferences.edit().clear().apply()
         var jsonString: String? = sharedPreferences.getString("cartList", "")
-        if(!jsonString.isNullOrEmpty()){
-            cartList = Gson().fromJson(jsonString, Array<ProductData>::class.java) as ArrayList<ProductData>
-            cartFragment = CartEmptyFragment()
+        if(!jsonString.isNullOrEmpty() && jsonString != "[]"){
+            Log.i("myLog", "жсон строка не пустая")
+            val itemType = object : TypeToken<ArrayList<ProductData>>() {}.type
+            cartList = Gson().fromJson<ArrayList<ProductData>>(jsonString, itemType)
+            cartFragment = CartFragment()
         }
 
         setContentView(R.layout.activity_main)

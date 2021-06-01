@@ -31,6 +31,10 @@ class AccountFragment : Fragment() {
             mainActivity.makeCurrentFragment(AccountNotLoginFragment())
         }
 
+        inflate.cardOrders.setOnClickListener {
+            mainActivity.makeCurrentFragment(OrdersFragment())
+        }
+
         return inflate
     }
 

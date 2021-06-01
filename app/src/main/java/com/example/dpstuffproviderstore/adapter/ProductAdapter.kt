@@ -1,6 +1,7 @@
 package com.example.dpstuffproviderstore.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,19 +50,29 @@ internal class ProductAdapter(private var productsList: List<ProductData>, priva
     }
 
     override fun onBindViewHolder(holder: ProductAdapter.MyViewHolder, position: Int) {
+        val mainActivity = fragment.activity as MainActivity
+
         holder.productPrice.text = "${productsList[position].price} ₽"
         holder.productTitle.text = productsList[position].name
         holder.productStore.text = "Магазин: ${productsList[position].store}"
         holder.productRating.text = "Рейтинг: ${productsList[position].rating}/5"
 
         holder.btnCart.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "${productsList[position].name} Добавлен в корзину", Toast.LENGTH_LONG).show()
-            val mainActivity = fragment.activity as MainActivity
-            mainActivity.cartList!!.add(productsList[position])
-            mainActivity.cartFragment = CartFragment()
-            val editor = mainActivity.getSharedPreferences("sp", Context.MODE_PRIVATE).edit()
-            editor.putString("cartList", Gson().toJson(mainActivity.cartList!!))
-            editor.apply()
+
+
+            if(mainActivity.cartList.contains(productsList[position])){
+                Toast.makeText(holder.itemView.context, "Товар уже добавлен в корзину", Toast.LENGTH_LONG).show()
+            }
+            else{
+                Toast.makeText(holder.itemView.context, "${productsList[position].name} Добавлен в корзину", Toast.LENGTH_LONG).show()
+                mainActivity.cartList.add(productsList[position])
+                mainActivity.cartFragment = CartFragment()
+
+                val editor = mainActivity.getSharedPreferences("sp", Context.MODE_PRIVATE).edit()
+                editor.putString("cartList", Gson().toJson(mainActivity.cartList))
+                editor.apply()
+            }
+            Log.i("myLog", "add to cart: ${Gson().toJson(mainActivity.cartList)}")
         }
 
         val retrofit = Retrofit.Builder()
@@ -82,7 +93,6 @@ internal class ProductAdapter(private var productsList: List<ProductData>, priva
                             .into(holder.productImage)
                 }
                 else{
-                    val mainActivity = fragment.activity as MainActivity
                     val fragment = ErrorFragment()
                     fragment.statusCode = response.code().toString()
                     mainActivity.makeCurrentFragment(fragment)
@@ -90,7 +100,6 @@ internal class ProductAdapter(private var productsList: List<ProductData>, priva
             }
 
             override fun onFailure(call: Call<List<ProductImagesData>>, t: Throwable){
-                val mainActivity = fragment.activity as MainActivity
                 val fragment = ErrorFragment()
                 mainActivity.makeCurrentFragment(fragment)
             }
