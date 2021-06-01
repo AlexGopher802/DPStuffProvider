@@ -14,5 +14,6 @@ namespace DPSP_Api.Models.Views
         public bool? avail { get; set; }
         public string category { get; set; }
         public string store { get; set; }
+        public int? quantity { get; set; } = 1;
     }
 }

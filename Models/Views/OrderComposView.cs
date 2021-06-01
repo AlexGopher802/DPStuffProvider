@@ -9,7 +9,7 @@ namespace DPSP_Api.Models
     {
         public string Name { get; set; }
         public string ShopName { get; set; }
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public double Price { get; set; }
 
         public OrderComposView(ProductCompos productCompos, Product product, StoreInfo storeInfo)
