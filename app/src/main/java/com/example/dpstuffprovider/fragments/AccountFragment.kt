@@ -1,4 +1,4 @@
-package com.example.dpstuffprovider.fragment
+package com.example.dpstuffprovider.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -14,6 +14,9 @@ import com.example.dpstuffprovider.MainMenu
 import com.example.dpstuffprovider.R
 import kotlinx.android.synthetic.main.fragment_account.view.*
 
+/**
+ * Фрагмент профиля курьера, где отображается личная информация курьера
+ */
 class AccountFragment : Fragment() {
 
     override fun onCreateView(

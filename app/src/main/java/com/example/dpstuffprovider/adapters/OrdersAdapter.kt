@@ -1,4 +1,4 @@
-package com.example.dpstuffprovider
+package com.example.dpstuffprovider.adapters
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,18 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dpstuffprovider.interfaces.IOrders
+import com.example.dpstuffprovider.MoreInfo
+import com.example.dpstuffprovider.R
+import com.example.dpstuffprovider.api.ApiService
 import com.example.dpstuffprovider.models.ClientData
 import com.example.dpstuffprovider.models.OrderCompos
 import com.example.dpstuffprovider.models.OrderComposData
 import com.example.dpstuffprovider.models.OrdersData
-import kotlinx.android.synthetic.main.activity_main_menu.*
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Адаптер для отображения списка заказов
+ */
 internal class OrdersAdapter (private var ordersList: List<OrdersData>) : RecyclerView.Adapter<OrdersAdapter.MyViewHolder>(){
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val address : TextView = view.findViewById(R.id.tvAddress)
@@ -34,7 +39,9 @@ internal class OrdersAdapter (private var ordersList: List<OrdersData>) : Recycl
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.order_item, parent, false)
-        return MyViewHolder(itemView)
+        return MyViewHolder(
+            itemView
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -49,42 +56,19 @@ internal class OrdersAdapter (private var ordersList: List<OrdersData>) : Recycl
 
             val intent : Intent = Intent(holder.itemView.context, MoreInfo::class.java)
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            val api = retrofit.create(IOrders::class.java)
+            ApiService().getClient(ordersList[position].id) {
+                if(it != null){
+                    intent.putExtra("orderInfo", ordersList[position])
+                    intent.putExtra("clientInfo", it[0])
 
-            api.GetClient(ordersList[position].id).enqueue(object : Callback<List<ClientData>> {
-                override fun onResponse(call: Call<List<ClientData>>,
-                                        response: Response<List<ClientData>>) {
-                    if(response.code() == 200){
-                        intent.putExtra("orderInfo", ordersList[position])
-                        intent.putExtra("clientInfo", response.body()!![0])
-                        api.GetOderCompos(ordersList[position].id).enqueue(object : Callback<List<OrderComposData>> {
-                            override fun onResponse(call: Call<List<OrderComposData>>,
-                                                    response: Response<List<OrderComposData>>) {
-                                if(response.code() == 200){
-                                    Log.i("myLog", "200, заебумба")
-                                    intent.putExtra("orderCompos", OrderCompos(response.body()!!))
-                                    startActivity(holder.itemView.context, intent, Bundle.EMPTY)
-                                }
-                                else{
-                                    Log.i("myLog", "4**, не заебумба")
-                                }
-                            }
-
-                            override fun onFailure(call: Call<List<OrderComposData>>, t: Throwable){
-                                Log.i("myLog", "Пиздык чирик")
-                            }
-                        })
+                    ApiService().getOrderCompos(ordersList[position].id) {
+                        if(it != null) {
+                            intent.putExtra("orderCompos", OrderCompos(it))
+                            startActivity(holder.itemView.context, intent, Bundle.EMPTY)
+                        }
                     }
                 }
-
-                override fun onFailure(call: Call<List<ClientData>>, t: Throwable){
-
-                }
-            })
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.dpstuffprovider
+package com.example.dpstuffprovider.interfaces
 
 import com.example.dpstuffprovider.models.CouriersData
 import retrofit2.Call
