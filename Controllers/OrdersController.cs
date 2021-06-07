@@ -39,7 +39,67 @@ namespace DPSP_Api.Controllers
         }
 
         /// <summary>
-        /// Выводит список всех заказов
+        /// Выводит список заказов по статусу
+        /// </summary>
+        [HttpGet]
+        [Route("[action]/{statusName}")]
+        public ActionResult<IEnumerable<OrdersView>> GetOrdersByStatus(string statusName)
+        {
+            var result = (from order in _context.Ordereds
+                         join client in _context.Clients on order.IdClient equals client.Id
+                         join person in _context.PersonalInfos on client.IdPersonalInfo equals person.Id
+                         join contacts in _context.Contacts on client.IdContacts equals contacts.Id
+                         join status in _context.OrderStatuses on order.IdOrderStatus equals status.Id
+                         join address in _context.AddressDeliveries on order.IdAddress equals address.Id
+                         where status.Name == statusName
+                         select new OrdersView(order, address, person, contacts, status)).ToList();
+
+            if(result.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
+        }
+
+        /// <summary>
+        /// Обновляет статус заказа
+        /// </summary>
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult<OrdersView> UpdateStatus(OrdersView newOrder)
+        {
+            OrderStatus newStatus = _context.OrderStatuses.Where(s => s.Name == newOrder.status).FirstOrDefault();
+            if(newStatus == null)
+            {
+                return NotFound();
+            }
+
+            Ordered updateOrder = _context.Ordereds.Where(o => o.Id == newOrder.id).FirstOrDefault();
+            updateOrder.IdOrderStatusNavigation = newStatus;
+
+            _context.Ordereds.Update(updateOrder);
+            _context.SaveChanges();
+
+            var result = (from order in _context.Ordereds
+                          join client in _context.Clients on order.IdClient equals client.Id
+                          join person in _context.PersonalInfos on client.IdPersonalInfo equals person.Id
+                          join contacts in _context.Contacts on client.IdContacts equals contacts.Id
+                          join status in _context.OrderStatuses on order.IdOrderStatus equals status.Id
+                          join address in _context.AddressDeliveries on order.IdAddress equals address.Id
+                          where order.Id == updateOrder.Id
+                          select new OrdersView(order, address, person, contacts, status)).ToList();
+
+            if(result.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result[0]);
+        }
+
+        /// <summary>
+        /// Выводит список всех заказов клиента по логину и паролю
         /// </summary>
         [HttpGet]
         [Route("[action]/{login}/{password}")]
