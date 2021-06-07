@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dpstuffprovider.adapters.OrderComposAdapter
 import com.example.dpstuffprovider.models.ClientData
 import com.example.dpstuffprovider.models.OrderCompos
 import com.example.dpstuffprovider.models.OrdersData
 import kotlinx.android.synthetic.main.activity_more_info.*
 import java.lang.Exception
 
+/**
+ * Активити с подробной информацией о выбранном заказе
+ */
 class MoreInfo : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +44,9 @@ class MoreInfo : AppCompatActivity() {
         }
 
         recyclerProducts.layoutManager = LinearLayoutManager(applicationContext)
-        recyclerProducts.adapter = OrderComposAdapter((intent.getSerializableExtra("orderCompos") as OrderCompos?)!!.listOrderCompos)
+        recyclerProducts.adapter =
+            OrderComposAdapter(
+                (intent.getSerializableExtra("orderCompos") as OrderCompos?)!!.listOrderCompos
+            )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.dpstuffprovider
+package com.example.dpstuffprovider.interfaces
 
 import com.example.dpstuffprovider.models.ClientData
 import com.example.dpstuffprovider.models.OrderComposData
@@ -9,10 +9,10 @@ import retrofit2.http.Path
 
 interface IOrders {
     @GET("orders")
-    fun GetOders(): Call<List<OrdersData>>
+    fun GetOrders(): Call<List<OrdersData>>
 
     @GET("orders/{id}")
-    fun GetOderCompos(@Path("id") id : Int): Call<List<OrderComposData>>
+    fun GetOrderCompos(@Path("id") id : Int): Call<List<OrderComposData>>
 
     @GET("orders/getclient/{id}")
     fun GetClient(@Path("id") id : Int): Call<List<ClientData>>
