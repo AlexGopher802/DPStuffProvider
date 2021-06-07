@@ -36,6 +36,29 @@ class ApiService {
         })
     }
 
+    fun getOrdersByStatus(statusName: String, onResult: (List<OrdersData>?) -> Unit){
+        val api = ApiBuilder.buildService(IOrders::class.java)
+
+        api.GetOrdersByStatus(statusName).enqueue(object : Callback<List<OrdersData>> {
+            override fun onResponse(call: Call<List<OrdersData>>,
+                                    response: Response<List<OrdersData>>
+            ) {
+                if(response.code() == 200){
+                    onResult(response.body()!!)
+                }
+                else{
+                    Log.i("myLog", "${response.code()}; ${response.errorBody()}; ${response.message()};")
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<OrdersData>>, t: Throwable){
+                Log.i("myLog", "Api Failure")
+                onResult(null)
+            }
+        })
+    }
+
     fun getOrderCompos(id: Int, onResult: (List<OrderComposData>?) -> Unit){
         val api = ApiBuilder.buildService(IOrders::class.java)
 

@@ -16,4 +16,7 @@ interface IOrders {
 
     @GET("orders/getclient/{id}")
     fun GetClient(@Path("id") id : Int): Call<List<ClientData>>
+
+    @GET("orders/GetOrdersByStatus/{statusName}")
+    fun GetOrdersByStatus(@Path("statusName") statusName : String): Call<List<OrdersData>>
 }
