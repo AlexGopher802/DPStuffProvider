@@ -24,6 +24,7 @@ namespace DPSP_Api.Models
         public string timeFrom { get; set; }
         public string timeTo { get; set; }
         public string commentary { get; set; }
+        public string codeToFinish { get; set; }
         public int? idCourier { get; set; }
         public double? summ { get; set; }
         public int? priority { get; set; }
@@ -45,9 +46,11 @@ namespace DPSP_Api.Models
             timeFrom = ordered.DeliveryTimeFrom.ToString();
             timeTo = ordered.DeliveryTimeTo.ToString();
             commentary = ordered.Commentary;
+            idCourier = ordered.IdCourier;
             summ = ordered.Summ;
             priority = ordered.Priority;
             status = orderStatus.Name;
+            codeToFinish = ordered.CodeToFinish;
         }
 
         public OrdersView()

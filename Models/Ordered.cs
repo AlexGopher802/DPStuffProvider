@@ -21,6 +21,7 @@ namespace DPSP_Api
         public string Commentary { get; set; }
         public double? Summ { get; set; }
         public int? Priority { get; set; }
+        public string CodeToFinish { get; set; }
         public int IdAddress { get; set; }
         public int IdClient { get; set; }
         public int? IdCourier { get; set; }

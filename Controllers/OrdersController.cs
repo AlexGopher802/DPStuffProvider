@@ -63,6 +63,30 @@ namespace DPSP_Api.Controllers
         }
 
         /// <summary>
+        /// Выводит список активных заказов по id курьера
+        /// </summary>
+        [HttpGet]
+        [Route("[action]/{idCourier}")]
+        public ActionResult<IEnumerable<OrdersView>> GetActiveOrdersByCourier(int idCourier)
+        {
+            var result = (from order in _context.Ordereds
+                          join client in _context.Clients on order.IdClient equals client.Id
+                          join person in _context.PersonalInfos on client.IdPersonalInfo equals person.Id
+                          join contacts in _context.Contacts on client.IdContacts equals contacts.Id
+                          join status in _context.OrderStatuses on order.IdOrderStatus equals status.Id
+                          join address in _context.AddressDeliveries on order.IdAddress equals address.Id
+                          where status.Name == "Выдан курьеру" && order.IdCourier == idCourier
+                          select new OrdersView(order, address, person, contacts, status)).ToList();
+
+            if (result.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
+        }
+
+        /// <summary>
         /// Обновляет статус заказа
         /// </summary>
         [HttpPost]
@@ -77,6 +101,7 @@ namespace DPSP_Api.Controllers
 
             Ordered updateOrder = _context.Ordereds.Where(o => o.Id == newOrder.id).FirstOrDefault();
             updateOrder.IdOrderStatusNavigation = newStatus;
+            updateOrder.IdCourier = newOrder.idCourier;
 
             _context.Ordereds.Update(updateOrder);
             _context.SaveChanges();

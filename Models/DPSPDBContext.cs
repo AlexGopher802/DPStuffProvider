@@ -218,6 +218,10 @@ namespace DPSP_Api
 
                 entity.Property(e => e.Commentary).HasColumnName("commentary");
 
+                entity.Property(e => e.CodeToFinish)
+                    .HasColumnName("codeToFinish")
+                    .HasDefaultValueSql("(('0000'))");
+
                 entity.Property(e => e.DeliveryDate)
                     .HasColumnType("date")
                     .HasColumnName("deliveryDate");
