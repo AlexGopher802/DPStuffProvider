@@ -59,6 +59,7 @@ create table Ordered(
 	commentary nvarchar(max) null,
 	summ float default 0,
 	priority int default 5,
+	codeToFinish varchar(4) default '0000',
 	idAddress int not null,
 	foreign key (idAddress) references AddressDelivery (id),
 	idClient int not null,
@@ -68,6 +69,8 @@ create table Ordered(
 	idOrderStatus int not null,
 	foreign key (idOrderStatus) references OrderStatus (id)
 );
+
+update Ordered set codeToFinish = '0000'
 
 create table OrderFinished(
 	id int primary key identity,
