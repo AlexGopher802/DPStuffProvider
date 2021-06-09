@@ -16,7 +16,7 @@ data class OrderData (
         @SerializedName("timeFrom") var timeFrom : String?,
         @SerializedName("timeTo") var timeTo : String?,
         @SerializedName("commentary") var commentary : String?,
-        @SerializedName("idCourier") var idCourier : String?,
+        @SerializedName("idCourier") var idCourier : Int?,
         @SerializedName("summ") var summ : Double?,
         @SerializedName("priority") var priority : Int?,
         @SerializedName("status") var status : String?,
