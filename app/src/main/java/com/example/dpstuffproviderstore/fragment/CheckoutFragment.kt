@@ -18,6 +18,9 @@ import kotlinx.android.synthetic.main.fragment_checkout.*
 import kotlinx.android.synthetic.main.fragment_checkout.view.*
 import java.util.*
 
+/**
+ * Фрагмент оформления нового заказа
+ */
 class CheckoutFragment : Fragment() {
 
     var inflate : View? = null
