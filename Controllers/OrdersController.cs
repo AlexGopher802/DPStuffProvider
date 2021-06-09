@@ -219,6 +219,7 @@ namespace DPSP_Api.Controllers
                 Commentary = newOrder.commentary,
                 Summ = newOrder.summ,
                 Priority = 5,
+                CodeToFinish = newOrder.codeToFinish,
                 IdAddressNavigation = addressDelivery,
                 IdClient = (from client in _context.Clients
                             join person in _context.PersonalInfos on client.IdPersonalInfo equals person.Id
