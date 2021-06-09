@@ -25,6 +25,7 @@ internal class OrderAdapter(private var ordersList: List<OrderData>, private var
         val orderDate: TextView = view.findViewById(R.id.tvOrderDate)
         val orderStatus: TextView = view.findViewById(R.id.tvOrderStatus)
         val orderNum: TextView = view.findViewById(R.id.tvOrderNum)
+        val orderCode: TextView = view.findViewById(R.id.tvOrderCode)
     }
 
     @NonNull
@@ -39,6 +40,7 @@ internal class OrderAdapter(private var ordersList: List<OrderData>, private var
         holder.orderDate.text = "${ordersList[position].deliveryDate}"
         holder.orderStatus.text = "${ordersList[position].status}"
         holder.orderInfo.text = "Итого: ${ordersList[position].summ} ₽"
+        holder.orderCode.text = "Код: ${ordersList[position].codeToFinish}"
     }
 
     override fun getItemCount(): Int {

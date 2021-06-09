@@ -78,6 +78,7 @@ class CheckoutFragment : Fragment() {
                     status = null,
                     idCourier = null,
                     priority = 5,
+                    codeToFinish = ((1000..9999).random().toString()),
                     listProducts = mainActivity.cartList
             )
 

@@ -19,6 +19,7 @@ data class OrderData (
         @SerializedName("idCourier") var idCourier : Int?,
         @SerializedName("summ") var summ : Double?,
         @SerializedName("priority") var priority : Int?,
+        @SerializedName("codeToFinish") var codeToFinish : String?,
         @SerializedName("status") var status : String?,
         @SerializedName("listProducts") var listProducts : List<ProductData>?
 )
