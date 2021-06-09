@@ -21,22 +21,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         val sp : SharedPreferences = getSharedPreferences("sp", Context.MODE_PRIVATE)
         if(sp.getBoolean("isLogin", false)){
             login(sp.getString("login", "")!!, sp.getString("password", "")!!)
         }
-        else{
-            setContentView(R.layout.activity_main)
-        }
     }
 
-    fun validForm(): Boolean{
-        return true
+    override fun onRestart() {
+        super.onRestart()
+        progressBarOff()
+        getSharedPreferences("sp", Context.MODE_PRIVATE).edit().putBoolean("isLogin", false).apply()
     }
 
     fun login(login : String, password : String){
-        //if (!validForm()) return
+        progressBarOn()
 
         ApiService().getCouriers(login, password) {
             if(it != null){
@@ -55,12 +55,23 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else{
-                //Обработка ошибки
+                progressBarOff()
+                Toast.makeText(applicationContext, "Неверный логин и/или пароль", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     fun onClickLogin(view : View){
         login(etLogin.text.toString(), etPassword.text.toString())
+    }
+
+    fun progressBarOn(){
+        progressBar.visibility = View.VISIBLE
+        btnLogin.visibility = View.GONE
+    }
+
+    fun progressBarOff(){
+        progressBar.visibility = View.GONE
+        btnLogin.visibility = View.VISIBLE
     }
 }

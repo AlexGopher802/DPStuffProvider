@@ -24,18 +24,21 @@ class ActiveDeliveryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inflate : FrameLayout = inflater.inflate(R.layout.fragment_active_delivery, container, false) as FrameLayout
+        val inflate = inflater.inflate(R.layout.fragment_active_delivery, container, false)
         val parentActivity = activity as MainMenu
 
         inflate.recyclerActiveOrders.layoutManager = LinearLayoutManager(context!!)
 
+        inflate.progressBarActive.visibility = View.VISIBLE
         ApiService().getActiveOrdersByCourier(parentActivity.courier!!.id) {
             if(it != null){
-                hintEmpty.visibility = View.GONE
-                inflate.recyclerActiveOrders.adapter = OrdersAdapter(it, (activity as MainMenu))
+                inflate.progressBarActive.visibility = View.GONE
+                inflate.hintEmpty.visibility = View.GONE
+                inflate.recyclerActiveOrders.adapter = OrdersAdapter(it, parentActivity)
             }
             else{
-                hintEmpty.visibility = View.VISIBLE
+                inflate.progressBarActive.visibility = View.GONE
+                inflate.hintEmpty.visibility = View.VISIBLE
             }
         }
 

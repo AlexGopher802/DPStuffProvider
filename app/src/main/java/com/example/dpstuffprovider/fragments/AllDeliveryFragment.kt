@@ -14,6 +14,7 @@ import com.example.dpstuffprovider.adapters.OrdersAdapter
 import com.example.dpstuffprovider.R
 import com.example.dpstuffprovider.api.ApiService
 import com.example.dpstuffprovider.models.OrdersData
+import kotlinx.android.synthetic.main.fragment_all_delivery.*
 import kotlinx.android.synthetic.main.fragment_all_delivery.view.*
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -32,15 +33,19 @@ class AllDeliveryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val inflate : FrameLayout = inflater.inflate(R.layout.fragment_all_delivery, container, false) as FrameLayout
+        val inflate = inflater.inflate(R.layout.fragment_all_delivery, container, false)
+        val parentActivity = activity as MainMenu
 
         inflate.recyclerOrders.layoutManager = LinearLayoutManager(context!!)
 
+        inflate.progressBarAll.visibility = View.VISIBLE
         ApiService().getOrdersByStatus("Обрабатывается") {
             if(it != null){
-                inflate.recyclerOrders.adapter = OrdersAdapter(it, (activity as MainMenu))
+                inflate.progressBarAll.visibility = View.GONE
+                inflate.recyclerOrders.adapter = OrdersAdapter(it, parentActivity)
             }
             else{
+                inflate.progressBarAll.visibility = View.GONE
                 //Обработка ошибки
             }
         }

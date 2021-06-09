@@ -24,9 +24,9 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val inflate : FrameLayout = inflater.inflate(R.layout.fragment_account, container, false) as FrameLayout
-
+        val inflate = inflater.inflate(R.layout.fragment_account, container, false)
         val mainMenu = activity as MainMenu
+        
         inflate.nameCourier.text = "${mainMenu.courier!!.lastName} ${mainMenu.courier!!.firstName} ${mainMenu.courier!!.patronymic}"
         inflate.tvAccPhone.text = "Телефон: ${mainMenu.courier!!.phone}"
         inflate.tvAccEmail.text = "Почта: ${mainMenu.courier!!.email}"

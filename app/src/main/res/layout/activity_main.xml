@@ -58,4 +58,19 @@
         app:layout_constraintRight_toRightOf="parent"
         android:onClick="onClickLogin"/>
 
+    <RelativeLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:progressDrawable="@drawable/bar" />
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
