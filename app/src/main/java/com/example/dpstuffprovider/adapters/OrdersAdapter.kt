@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dpstuffprovider.MainMenu
 import com.example.dpstuffprovider.interfaces.IOrders
 import com.example.dpstuffprovider.MoreInfo
 import com.example.dpstuffprovider.R
@@ -25,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * Адаптер для отображения списка заказов
  */
-internal class OrdersAdapter (private var ordersList: List<OrdersData>) : RecyclerView.Adapter<OrdersAdapter.MyViewHolder>(){
+internal class OrdersAdapter (private var ordersList: List<OrdersData>, private var activity: MainMenu) : RecyclerView.Adapter<OrdersAdapter.MyViewHolder>(){
     internal class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val address : TextView = view.findViewById(R.id.tvAddress)
         val date : TextView = view.findViewById(R.id.tvDate)
@@ -64,6 +65,7 @@ internal class OrdersAdapter (private var ordersList: List<OrdersData>) : Recycl
                     ApiService().getOrderCompos(ordersList[position].id) {
                         if(it != null) {
                             intent.putExtra("orderCompos", OrderCompos(it))
+                            intent.putExtra("courier", activity.courier)
                             startActivity(holder.itemView.context, intent, Bundle.EMPTY)
                         }
                     }

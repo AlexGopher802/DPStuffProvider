@@ -178,6 +178,22 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:visibility="visible"/>
+
+    <Button
+        android:id="@+id/btnEndOrder"
+        android:layout_width="130dp"
+        android:layout_height="38dp"
+        android:layout_marginRight="5dp"
+        android:text="Завершить заказ"
+        android:textColor="@color/mainDark"
+        android:textSize="12sp"
+        android:background="@color/mainButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

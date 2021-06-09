@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dpstuffprovider.MainMenu
 import com.example.dpstuffprovider.interfaces.IOrders
 import com.example.dpstuffprovider.adapters.OrdersAdapter
 import com.example.dpstuffprovider.R
@@ -33,16 +34,14 @@ class AllDeliveryFragment : Fragment() {
 
         val inflate : FrameLayout = inflater.inflate(R.layout.fragment_all_delivery, container, false) as FrameLayout
 
-        GlobalScope.launch {
-            inflate.recyclerOrders.layoutManager = LinearLayoutManager(context!!)
+        inflate.recyclerOrders.layoutManager = LinearLayoutManager(context!!)
 
-            ApiService().getOrders() {
-                if(it != null){
-                    inflate.recyclerOrders.adapter = OrdersAdapter(it)
-                }
-                else{
-                    //Обработка ошибки
-                }
+        ApiService().getOrdersByStatus("Обрабатывается") {
+            if(it != null){
+                inflate.recyclerOrders.adapter = OrdersAdapter(it, (activity as MainMenu))
+            }
+            else{
+                //Обработка ошибки
             }
         }
 

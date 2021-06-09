@@ -16,21 +16,19 @@ class MainMenu : AppCompatActivity() {
 
     var courier : CouriersData? = null
 
+    /*val allDeliveryFragment = AllDeliveryFragment()
+    val activeDeliveryFragment = ActiveDeliveryFragment()
+    val accountFragment = AccountFragment()*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
-        val allDeliveryFragment = AllDeliveryFragment()
-        val activeDeliveryFragment = ActiveDeliveryFragment()
-        val accountFragment = AccountFragment()
-
-        makeCurrentFragment(allDeliveryFragment)
-
         bottomNavMenu.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.allDelivery -> makeCurrentFragment(allDeliveryFragment)
-                R.id.activeDelivery -> makeCurrentFragment(activeDeliveryFragment)
-                R.id.account -> makeCurrentFragment(accountFragment)
+                R.id.allDelivery -> makeCurrentFragment(AllDeliveryFragment())
+                R.id.activeDelivery -> makeCurrentFragment(ActiveDeliveryFragment())
+                R.id.account -> makeCurrentFragment(AccountFragment())
             }
             true
         }
@@ -44,4 +42,10 @@ class MainMenu : AppCompatActivity() {
             replace(R.id.frameWrapper, fragment)
             commit()
         }
+
+    override fun onResume() {
+        super.onResume()
+
+        makeCurrentFragment(AllDeliveryFragment())
+    }
 }

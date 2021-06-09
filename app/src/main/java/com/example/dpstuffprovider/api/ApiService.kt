@@ -59,6 +59,52 @@ class ApiService {
         })
     }
 
+    fun getActiveOrdersByCourier(idCourier: Int, onResult: (List<OrdersData>?) -> Unit){
+        val api = ApiBuilder.buildService(IOrders::class.java)
+
+        api.GetActiveOrdersByCourier(idCourier).enqueue(object : Callback<List<OrdersData>> {
+            override fun onResponse(call: Call<List<OrdersData>>,
+                                    response: Response<List<OrdersData>>
+            ) {
+                if(response.code() == 200){
+                    onResult(response.body()!!)
+                }
+                else{
+                    Log.i("myLog", "${response.code()}; ${response.errorBody()}; ${response.message()};")
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<List<OrdersData>>, t: Throwable){
+                Log.i("myLog", "Api Failure")
+                onResult(null)
+            }
+        })
+    }
+
+    fun updateOrderStatus(ordersData: OrdersData, onResult: (OrdersData?) -> Unit){
+        val api = ApiBuilder.buildService(IOrders::class.java)
+
+        api.UpdateStatus(ordersData).enqueue(object : Callback<OrdersData> {
+            override fun onResponse(call: Call<OrdersData>,
+                                    response: Response<OrdersData>
+            ) {
+                if(response.code() == 200){
+                    onResult(response.body()!!)
+                }
+                else{
+                    Log.i("myLog", "${response.code()}; ${response.errorBody()}; ${response.message()};")
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<OrdersData>, t: Throwable){
+                Log.i("myLog", "Api Failure")
+                onResult(null)
+            }
+        })
+    }
+
     fun getOrderCompos(id: Int, onResult: (List<OrderComposData>?) -> Unit){
         val api = ApiBuilder.buildService(IOrders::class.java)
 

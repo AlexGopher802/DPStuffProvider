@@ -4,8 +4,7 @@ import com.example.dpstuffprovider.models.ClientData
 import com.example.dpstuffprovider.models.OrderComposData
 import com.example.dpstuffprovider.models.OrdersData
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface IOrders {
     @GET("orders")
@@ -19,4 +18,11 @@ interface IOrders {
 
     @GET("orders/GetOrdersByStatus/{statusName}")
     fun GetOrdersByStatus(@Path("statusName") statusName : String): Call<List<OrdersData>>
+
+    @GET("orders/GetActiveOrdersByCourier/{idCourier}")
+    fun GetActiveOrdersByCourier(@Path("idCourier") idCourier : Int): Call<List<OrdersData>>
+
+    @Headers("Content-Type: application/json")
+    @POST("orders/UpdateStatus")
+    fun UpdateStatus(@Body ordersData: OrdersData): Call<OrdersData>
 }

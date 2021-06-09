@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -28,11 +31,26 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerActiveOrders"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/cardTitle"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            tools:listitem="@layout/order_item"
+            android:layout_marginTop="10dp"/>
+
         <TextView
+            android:id="@+id/hintEmpty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Активные заказы отсутствуют..."
-            android:layout_centerInParent="true"/>
+            android:textColor="@color/mainDark"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
