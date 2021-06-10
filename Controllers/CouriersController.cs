@@ -22,37 +22,6 @@ namespace DPSP_Api.Controllers
             _context = context;
         }
 
-        /*
-        //Выводит список всех курьеров
-        [HttpGet]
-        public IEnumerable<object> GetCouriers()
-        {
-            var emps = from emp in _context.Couriers
-                       join person in _context.PersonalInfos on emp.IdPersonalInfo equals person.Id
-                       join contacts in _context.Contacts on emp.IdContacts equals contacts.Id
-                       select new CourierView(emp, person, contacts);
-            return emps;
-        }
-        
-        [Route("{id}")]
-        [HttpGet]
-        public ActionResult<IEnumerable<CourierView>> GetCouriers(int id)
-        {
-            var emps = from emp in _context.Couriers
-                       where emp.Id == id
-                       join person in _context.PersonalInfos on emp.IdPersonalInfo equals person.Id
-                       join contacts in _context.Contacts on emp.IdContacts equals contacts.Id
-                       select new CourierView(emp, person, contacts);
-            
-            if(emps.Count() == 0)
-            {
-                return NotFound();
-            }
-
-            return new ObjectResult(emps);
-        }
-        */
-
         /// <summary>
         /// Выводит информацию о курьере по логину и паролю
         /// </summary>
@@ -60,18 +29,44 @@ namespace DPSP_Api.Controllers
         [HttpGet]
         public ActionResult<CourierView> GetCouriers(string login, string password)
         {
-            var emps = from emp in _context.Couriers
+            var result = from emp in _context.Couriers
                         where emp.Login == login && emp.Password == SHA256.Create().ComputeHash(Encoding.Default.GetBytes(password))
                         join person in _context.PersonalInfos on emp.IdPersonalInfo equals person.Id
                         join contacts in _context.Contacts on emp.IdContacts equals contacts.Id
                         select new CourierView(emp, person, contacts);
 
-            if (emps.Count() == 0)
+            if (result.Count() == 0)
             {
                 return NotFound();
             }
 
-            return new ObjectResult(emps);
+            return new ObjectResult(result);
+        }
+
+        /// <summary>
+        /// Обновляет количество выполненных заказов
+        /// </summary>
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult<CourierView> UpdateOrdersQuantity(CourierView newCourier)
+        {
+            Courier courier = _context.Couriers.Where(c => c.Id == newCourier.Id).FirstOrDefault();
+            courier.OrderQuantity = newCourier.OrderQuantity;
+            _context.Couriers.Update(courier);
+            _context.SaveChanges();
+
+            var result = from emp in _context.Couriers
+                         where emp.Id == courier.Id
+                         join person in _context.PersonalInfos on emp.IdPersonalInfo equals person.Id
+                         join contacts in _context.Contacts on emp.IdContacts equals contacts.Id
+                         select new CourierView(emp, person, contacts);
+
+            if (result.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(result);
         }
     }
 }

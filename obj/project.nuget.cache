@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "B/llmLVP8hRWy5DOBxN547uduea6eAg9uvA8sE9qnR6HfhCRYYLeWrEwBo4sE7TZZhYICBchCdyXN8yEMB2euA==",
+  "dgSpecHash": "9CulZwRyb8tZBS4YVoBEeQpjSMKRfzwKAJQbhOWHB+4OA0F8gZqITjG9Mp72nUFbYM+a6O3RFGS0oSouBBRE+w==",
   "success": true,
-  "projectFilePath": "D:\\Work\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj",
+  "projectFilePath": "C:\\Users\\alexs\\Desktop\\W\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alexs\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
