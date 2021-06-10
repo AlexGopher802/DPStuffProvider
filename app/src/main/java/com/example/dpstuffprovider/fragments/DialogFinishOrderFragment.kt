@@ -31,9 +31,18 @@ class DialogFinishOrderFragment : DialogFragment() {
                     parentActivity.orderInfo!!.status = "Завершен"
                     ApiService().updateOrderStatus(parentActivity.orderInfo!!){
                         if(it != null){
-                            Toast.makeText(requireContext(), "Заказ завершен", Toast.LENGTH_LONG).show()
-                            this@DialogFinishOrderFragment.dismiss()
-                            parentActivity.finish()
+                            parentActivity.courier!!.orderQuantity++
+                            ApiService().updateOrderQuantity(parentActivity.courier!!){
+                                if(it != null){
+                                    Toast.makeText(requireContext(), "Заказ завершен", Toast.LENGTH_LONG).show()
+                                    this@DialogFinishOrderFragment.dismiss()
+                                    parentActivity.finish()
+                                }
+                                else{
+                                    parentActivity.courier!!.orderQuantity--
+                                    Toast.makeText(requireContext(), "Неизвестная ошибка, повторите позже", Toast.LENGTH_LONG).show()
+                                }
+                            }
                         }
                         else{
                             Toast.makeText(requireContext(), "Неизвестная ошибка, повторите позже", Toast.LENGTH_LONG).show()

@@ -173,4 +173,27 @@ class ApiService {
             }
         })
     }
+
+    fun updateOrderQuantity(couriersData: CouriersData, onResult: (CouriersData?) -> Unit){
+        val api = ApiBuilder.buildService(ICouriers::class.java)
+
+        api.UpdateOrdersQuantity(couriersData).enqueue(object : Callback<CouriersData> {
+            override fun onResponse(call: Call<CouriersData>,
+                                    response: Response<CouriersData>
+            ) {
+                if(response.code() == 200){
+                    onResult(response.body()!!)
+                }
+                else{
+                    Log.i("myLog", "${response.code()}; ${response.errorBody()}; ${response.message()};")
+                    onResult(null)
+                }
+            }
+
+            override fun onFailure(call: Call<CouriersData>, t: Throwable){
+                Log.i("myLog", "Api Failure")
+                onResult(null)
+            }
+        })
+    }
 }

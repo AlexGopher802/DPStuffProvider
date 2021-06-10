@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class CouriersData (
-    @SerializedName("id") var id : Int,
-    @SerializedName("lastName") var lastName : String,
-    @SerializedName("firstName") var firstName : String,
-    @SerializedName("patronymic") var patronymic : String,
-    @SerializedName("login") var login : String,
-    @SerializedName("password") var password : String,
-    @SerializedName("orderQuantity") var orderQuantity : Int,
-    @SerializedName("phone") var phone : String,
-    @SerializedName("email") var email : String
+    @SerializedName("Id") var id : Int,
+    @SerializedName("LastName") var lastName : String,
+    @SerializedName("FirstName") var firstName : String,
+    @SerializedName("Patronymic") var patronymic : String,
+    @SerializedName("Login") var login : String,
+    @SerializedName("Password") var password : String,
+    @SerializedName("OrderQuantity") var orderQuantity : Int,
+    @SerializedName("Phone") var phone : String,
+    @SerializedName("Email") var email : String
 ) : Serializable
