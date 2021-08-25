@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceBuilder {
     fun<T> buildService(service: Class<T>): T{
         val retrofit = Retrofit.Builder()
-                .baseUrl("https://dpspapiv220210407004655.azurewebsites.net/api/")
+                .baseUrl("http://194.32.248.98:49155/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         val api = retrofit.create(service)
