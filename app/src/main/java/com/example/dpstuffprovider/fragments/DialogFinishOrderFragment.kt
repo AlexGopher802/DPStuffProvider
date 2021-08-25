@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.dpstuffprovider.MainMenu
 import com.example.dpstuffprovider.MoreInfo
 import com.example.dpstuffprovider.R
 import com.example.dpstuffprovider.api.ApiService
@@ -31,7 +32,7 @@ class DialogFinishOrderFragment : DialogFragment() {
                     parentActivity.orderInfo!!.status = "Завершен"
                     ApiService().updateOrderStatus(parentActivity.orderInfo!!){
                         if(it != null){
-                            parentActivity.courier!!.orderQuantity++
+                            parentActivity.courier!!.orderQuantity = parentActivity.courier!!.orderQuantity + 1
                             ApiService().updateOrderQuantity(parentActivity.courier!!){
                                 if(it != null){
                                     Toast.makeText(requireContext(), "Заказ завершен", Toast.LENGTH_LONG).show()

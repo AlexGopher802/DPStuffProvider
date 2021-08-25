@@ -191,7 +191,7 @@ class ApiService {
             }
 
             override fun onFailure(call: Call<CouriersData>, t: Throwable){
-                Log.i("myLog", "Api Failure")
+                Log.i("myLog", "Api Failure update quantity")
                 onResult(null)
             }
         })
