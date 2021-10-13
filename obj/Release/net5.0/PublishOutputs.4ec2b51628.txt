@@ -1,0 +1,14 @@
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\DPSP Api.exe
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\appsettings.Development.json
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\appsettings.json
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\DPSP Api.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\DPSP Api.runtimeconfig.json
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\DPSP Api.pdb
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\Microsoft.EntityFrameworkCore.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\Microsoft.Extensions.DependencyInjection.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\MySqlConnector.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\System.Diagnostics.DiagnosticSource.dll
+D:\Work\DPStuffProvider\DPSP Api\obj\Docker\publish\DPSP Api.deps.json

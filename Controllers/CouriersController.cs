@@ -55,18 +55,18 @@ namespace DPSP_Api.Controllers
             _context.Couriers.Update(courier);
             _context.SaveChanges();
 
-            var result = from emp in _context.Couriers
+            var result = (from emp in _context.Couriers
                          where emp.Id == courier.Id
                          join person in _context.PersonalInfos on emp.IdPersonalInfo equals person.Id
                          join contacts in _context.Contacts on emp.IdContacts equals contacts.Id
-                         select new CourierView(emp, person, contacts);
+                         select new CourierView(emp, person, contacts)).ToList();
 
             if (result.Count() == 0)
             {
                 return NotFound();
             }
 
-            return new ObjectResult(result);
+            return new ObjectResult(result[0]);
         }
     }
 }

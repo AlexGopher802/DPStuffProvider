@@ -34,7 +34,7 @@ namespace DPSP_Api.Controllers
                               name = product.Name,
                               price = product.Cost,
                               rating = product.Rating,
-                              avail = product.Avail,
+                              avail = Convert.ToBoolean(product.Avail),
                               category = category.Name,
                               store = store.Name
                           }).ToList();
@@ -108,7 +108,7 @@ namespace DPSP_Api.Controllers
                              name = product.Name,
                              price = product.Cost,
                              rating = product.Rating,
-                             avail = product.Avail,
+                             avail = Convert.ToBoolean(product.Avail),
                              category = category.Name,
                              store = store.Name
                          }).ToList();

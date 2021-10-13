@@ -15,8 +15,8 @@ namespace DPSP_Api
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? IdParentCategory { get; set; }
         public string ImageUrl { get; set; }
+        public int? IdParentCategory { get; set; }
 
         public virtual ProductCategory IdParentCategoryNavigation { get; set; }
         public virtual ICollection<ProductCategory> InverseIdParentCategoryNavigation { get; set; }

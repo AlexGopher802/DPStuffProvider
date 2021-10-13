@@ -19,7 +19,7 @@ namespace DPSP_Api
         public TimeSpan DeliveryTimeFrom { get; set; }
         public TimeSpan DeliveryTimeTo { get; set; }
         public string Commentary { get; set; }
-        public double? Summ { get; set; }
+        public float? Summ { get; set; }
         public int? Priority { get; set; }
         public string CodeToFinish { get; set; }
         public int IdAddress { get; set; }

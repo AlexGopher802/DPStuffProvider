@@ -25,11 +25,9 @@ namespace DPSP_Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // получаем строку подключения из файла конфигурации
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            // добавляем контекст MobileContext в качестве сервиса в приложение
             services.AddDbContext<DPSPDBContext>(options =>
-                options.UseSqlServer(connection));
+                options.UseMySql(connection, new MySqlServerVersion(new Version(5, 7, 35))));
 
             services.AddControllers();
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alexs\\Desktop\\W\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj": {}
+    "G:\\Work\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alexs\\Desktop\\W\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj": {
+    "G:\\Work\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexs\\Desktop\\W\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj",
+        "projectUniqueName": "G:\\Work\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj",
         "projectName": "DPSP Api",
-        "projectPath": "C:\\Users\\alexs\\Desktop\\W\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj",
+        "projectPath": "G:\\Work\\DPStuffProvider\\DPSP Api\\DPSP Api.csproj",
         "packagesPath": "C:\\Users\\alexs\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexs\\Desktop\\W\\DPStuffProvider\\DPSP Api\\obj\\",
+        "outputPath": "G:\\Work\\DPStuffProvider\\DPSP Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,15 +44,19 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.5, )"
-            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.9, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.11.1, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[5.0.1, )"
             }
           },
           "imports": [
@@ -73,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

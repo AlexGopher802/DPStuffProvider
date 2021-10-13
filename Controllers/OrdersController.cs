@@ -217,7 +217,7 @@ namespace DPSP_Api.Controllers
                 DeliveryTimeFrom = TimeSpan.Parse(newOrder.timeFrom),
                 DeliveryTimeTo = TimeSpan.Parse(newOrder.timeTo),
                 Commentary = newOrder.commentary,
-                Summ = newOrder.summ,
+                Summ = (float)newOrder.summ,
                 Priority = 5,
                 CodeToFinish = newOrder.codeToFinish,
                 IdAddressNavigation = addressDelivery,
@@ -235,8 +235,8 @@ namespace DPSP_Api.Controllers
                 {
                     IdOrderNavigation = ordered,
                     IdProduct = _context.Products.Where(p => p.Id == i.id).Select(p => p.Id).FirstOrDefault(),
-                    Summ = i.price * i.quantity,
-                    Quantity = i.quantity
+                    Summ = (float)(i.price * i.quantity),
+                    Quantity = (int)i.quantity
                 };
                 _context.ProductCompos.Add(newProductCompos);
             }
