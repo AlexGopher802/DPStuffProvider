@@ -1,0 +1,14 @@
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\DPSP Api v2.exe
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\appsettings.Development.json
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\appsettings.json
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\DPSP Api v2.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\DPSP Api v2.runtimeconfig.json
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\DPSP Api v2.pdb
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\Microsoft.EntityFrameworkCore.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\Microsoft.EntityFrameworkCore.Relational.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\Microsoft.Extensions.DependencyInjection.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\MySqlConnector.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\Pomelo.EntityFrameworkCore.MySql.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\System.Diagnostics.DiagnosticSource.dll
+G:\Work\DPStuffProvider\DPSP Api v2\DPSP Api v2\obj\Docker\publish\DPSP Api v2.deps.json

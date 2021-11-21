@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>DPSPApiV2</RootNamespace>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>DPSPApiV2</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\images\**" />
+    <Compile Remove="images\**" />
+    <Content Remove="Controllers\images\**" />
+    <Content Remove="images\**" />
+    <EmbeddedResource Remove="Controllers\images\**" />
+    <EmbeddedResource Remove="images\**" />
+    <None Remove="Controllers\images\**" />
+    <None Remove="images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\logo.png" />
+    <Resource Include="Program.cs" />
+  </ItemGroup>
+
+</Project>
