@@ -116,7 +116,7 @@ namespace DPSPApiV2.Controllers
             }
             catch (Exception ex)
             {
-                return new ObjectResult(new { message = $"{ex.Message} {ex.InnerException.Message}" }) { StatusCode = 501 };
+                return new ObjectResult(new { message = ex.Message }) { StatusCode = 501 };
             }
         }
 
@@ -222,20 +222,21 @@ namespace DPSPApiV2.Controllers
             }
             catch (Exception ex)
             {
-                return new ObjectResult(new { message = $"{ex.Message} {ex.InnerException.Message}" }) { StatusCode = 501 };
+                return new ObjectResult(new { message = ex.Message }) { StatusCode = 501 };
             }
         }
 
         /// <summary>
-        /// Возвращает список всех товаров
+        /// Поиск товаров по названию (вхождение подстроки). Если ничего не передавать - вернется список всех товаров
         /// </summary>
         [Route("[action]")]
         [HttpGet]
-        public ActionResult AllList()
+        public ActionResult ListByName(string name)
         {
             try
             {
                 var result = (from product in _context.Products
+                              where product.Name.ToLower().Contains((name == null) ? "" : name.ToLower())
                               select new ProductData()
                               {
                                   Id = product.Id,
@@ -259,6 +260,59 @@ namespace DPSPApiV2.Controllers
                                                     Value = attribute.Value
                                                 }).ToList()
                               }).ToList();
+
+                if (result.Count == 0)
+                {
+                    throw new Exception("Not found products with this name");
+                }
+
+                return new ObjectResult(result);
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(new { message = ex.Message }) { StatusCode = 501 };
+            }
+        }
+
+        /// <summary>
+        /// Поиск товаров по категории и 1ой дочерней категории
+        /// </summary>
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult ListByCategory(string category)
+        {
+            try
+            {
+                var result = (from product in _context.Products
+                              where product.IdCategoryNavigation.Name.ToLower() == category.ToLower() || product.IdCategoryNavigation.IdParentCategoryNavigation.Name.ToLower() == category.ToLower()
+                              select new ProductData()
+                              {
+                                  Id = product.Id,
+                                  Name = product.Name,
+                                  Price = product.Price,
+                                  Rating = product.Rating.Value,
+                                  Avail = product.Avail.Value,
+                                  Category = product.IdCategoryNavigation.Name,
+                                  Vendor = product.IdVendorInfoNavigation.Name,
+                                  Images = (from image in _context.ProductImages
+                                            where image.IdProduct == product.Id
+                                            select new ProductImageData()
+                                            {
+                                                ImageUrl = image.ImageUrl
+                                            }).ToList(),
+                                  Attributes = (from attribute in _context.ProductDescriptions
+                                                where attribute.IdProduct == product.Id
+                                                select new ProductAttributeData()
+                                                {
+                                                    Name = attribute.IdProductAttributeNavigation.Name,
+                                                    Value = attribute.Value
+                                                }).ToList()
+                              }).ToList();
+
+                if (result.Count == 0)
+                {
+                    throw new Exception("Not found products with this category");
+                }
 
                 return new ObjectResult(result);
             }
